@@ -1,3 +1,4 @@
+using Aspire.Hosting.MinIO;
 using Projects;
 
 var builder = DistributedApplication.CreateBuilder(args);
@@ -15,6 +16,14 @@ var mysql = builder.AddMySql("mysql")
 
 var mysqldb = mysql.AddDatabase("mysqldb");
 
+// Redis
+
+var redis = builder.AddRedis("redis");
+
+// Minio
+
+var storage = builder.AddMinIO("storage");
+
 // Content Hub
 
 builder.AddProject<HexaContent_ContentHub>("hub")
@@ -25,6 +34,7 @@ builder.AddProject<HexaContent_ContentHub>("hub")
 
 builder.AddProject<HexaContent_StaticForge>("forge")
 	.WithReference(rabbitmq)
-	.WithReference(mysqldb);
+	.WithReference(mysqldb)
+	.WithReference(storage);
 
 builder.Build().Run();
