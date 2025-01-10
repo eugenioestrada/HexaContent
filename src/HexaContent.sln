@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexaContent.Core", "Core\HexaContent.Core.csproj", "{2EC3D676-BAE9-4BF3-9B7C-B9898DEE98F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexaContent.ContentHub", "ContentHub\HexaContent.ContentHub.csproj", "{2A6EB6DD-64A2-4531-A20F-15E2F3FD7B2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexaContent.Infrastructure", "Infrastructure\HexaContent.Infrastructure.csproj", "{4F99BDF9-1FCC-47FD-9CFC-0F661297A67E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexaContent.AppHost", "AppHost\HexaContent.AppHost.csproj", "{2BA403EA-E5DF-47CE-9333-BA92B4B84D1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexaContent.ServiceDefaults", "ServiceDefaults\HexaContent.ServiceDefaults.csproj", "{9A0568E0-9CB4-4B90-A71A-FCCBDB860C0F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Aspire", "Aspire", "{78A2BA2A-5830-4FFD-B226-31B1460DD0FE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{87EBEF4B-7E06-428C-83EB-47C4B9A3DA52}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{513F63A9-913C-430C-8DE4-7778202B675F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexaContent.StaticForge", "StaticForge\HexaContent.StaticForge.csproj", "{156AA8E7-C9C8-4727-AD7D-77FBA57D5F82}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2EC3D676-BAE9-4BF3-9B7C-B9898DEE98F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EC3D676-BAE9-4BF3-9B7C-B9898DEE98F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EC3D676-BAE9-4BF3-9B7C-B9898DEE98F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EC3D676-BAE9-4BF3-9B7C-B9898DEE98F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A6EB6DD-64A2-4531-A20F-15E2F3FD7B2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A6EB6DD-64A2-4531-A20F-15E2F3FD7B2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A6EB6DD-64A2-4531-A20F-15E2F3FD7B2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A6EB6DD-64A2-4531-A20F-15E2F3FD7B2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F99BDF9-1FCC-47FD-9CFC-0F661297A67E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F99BDF9-1FCC-47FD-9CFC-0F661297A67E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F99BDF9-1FCC-47FD-9CFC-0F661297A67E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F99BDF9-1FCC-47FD-9CFC-0F661297A67E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BA403EA-E5DF-47CE-9333-BA92B4B84D1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BA403EA-E5DF-47CE-9333-BA92B4B84D1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BA403EA-E5DF-47CE-9333-BA92B4B84D1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BA403EA-E5DF-47CE-9333-BA92B4B84D1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A0568E0-9CB4-4B90-A71A-FCCBDB860C0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A0568E0-9CB4-4B90-A71A-FCCBDB860C0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A0568E0-9CB4-4B90-A71A-FCCBDB860C0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A0568E0-9CB4-4B90-A71A-FCCBDB860C0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{156AA8E7-C9C8-4727-AD7D-77FBA57D5F82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{156AA8E7-C9C8-4727-AD7D-77FBA57D5F82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{156AA8E7-C9C8-4727-AD7D-77FBA57D5F82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{156AA8E7-C9C8-4727-AD7D-77FBA57D5F82}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2EC3D676-BAE9-4BF3-9B7C-B9898DEE98F3} = {87EBEF4B-7E06-428C-83EB-47C4B9A3DA52}
+		{4F99BDF9-1FCC-47FD-9CFC-0F661297A67E} = {87EBEF4B-7E06-428C-83EB-47C4B9A3DA52}
+		{2BA403EA-E5DF-47CE-9333-BA92B4B84D1A} = {78A2BA2A-5830-4FFD-B226-31B1460DD0FE}
+		{9A0568E0-9CB4-4B90-A71A-FCCBDB860C0F} = {78A2BA2A-5830-4FFD-B226-31B1460DD0FE}
+	EndGlobalSection
+EndGlobal
