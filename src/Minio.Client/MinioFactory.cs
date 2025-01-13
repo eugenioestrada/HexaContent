@@ -23,8 +23,11 @@ public sealed class MinioFactory : IDisposable
 		{
 			if (_client is null)
 			{
-				_client = new AmazonS3Client();
-				
+				_client = new AmazonS3Client(new AmazonS3Config
+				{
+					ServiceURL = _settings.Endpoint,
+					ForcePathStyle = true
+				});
 			}
 		}
 		finally
