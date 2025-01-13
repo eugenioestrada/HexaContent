@@ -1,4 +1,4 @@
-using Aspire.Hosting.MinIO;
+using HexaContent.Minio.Hosting;
 using Projects;
 
 var builder = DistributedApplication.CreateBuilder(args);
@@ -22,7 +22,7 @@ var redis = builder.AddRedis("redis");
 
 // Minio
 
-var storage = builder.AddMinIO("storage");
+var storage = builder.AddMinio("storage");
 
 // Content Hub
 

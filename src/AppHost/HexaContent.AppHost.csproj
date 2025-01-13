@@ -16,12 +16,12 @@
     <PackageReference Include="Aspire.Hosting.MySql" Version="9.0.0" />
     <PackageReference Include="Aspire.Hosting.RabbitMQ" Version="9.0.0" />
     <PackageReference Include="Aspire.Hosting.Redis" Version="9.0.0" />
-    <PackageReference Include="BCat.Hosting.MinIO" Version="8.2.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ContentHub\HexaContent.ContentHub.csproj" />
     <ProjectReference Include="..\StaticForge\HexaContent.StaticForge.csproj" />
+    <ProjectReference Include="..\Minio.Hosting\HexaContent.Minio.Hosting.csproj" IsAspireProjectResource="false" />
   </ItemGroup>
 
 </Project>
