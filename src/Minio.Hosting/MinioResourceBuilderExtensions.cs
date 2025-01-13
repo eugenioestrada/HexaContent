@@ -1,7 +1,8 @@
 ﻿using Aspire.Hosting.ApplicationModel;
 using Aspire.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace HexaContent.Minio.Hosting;
+namespace Aspire.Hosting;
 
 public static class MinioResourceBuilderExtensions
 {
@@ -26,6 +27,18 @@ public static class MinioResourceBuilderExtensions
 		// IResourceBuilder<T> instance. Extension methods to customize
 		// the resource (if any exist) target the builder interface.
 		var resource = new MinioResource(name);
+
+		string? connectionString = null;
+
+		builder.Eventing.Subscribe<ConnectionStringAvailableEvent>(resource, async (@event, ct) =>
+		{
+			connectionString = await resource.ConnectionStringExpression.GetValueAsync(ct).ConfigureAwait(false);
+
+			if (connectionString == null)
+			{
+				throw new DistributedApplicationException($"ConnectionStringAvailableEvent was published for the '{resource.Name}' resource but the connection string was null.");
+			}
+		});
 
 		return builder.AddResource(resource)
 					  .WithImage(MinioContainerImageTags.Image)

@@ -1,4 +1,4 @@
-﻿namespace HexaContent.Minio.Hosting;
+﻿namespace Aspire.Hosting;
 
 internal static class MinioContainerImageTags
 {

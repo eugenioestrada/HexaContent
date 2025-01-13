@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Minio.Client\HexaContent.Minio.Client.csproj" />
     <ProjectReference Include="..\ServiceDefaults\HexaContent.ServiceDefaults.csproj" />
   </ItemGroup>
 

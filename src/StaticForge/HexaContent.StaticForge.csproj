@@ -10,4 +10,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Minio.Client\HexaContent.Minio.Client.csproj" />
+    <ProjectReference Include="..\ServiceDefaults\HexaContent.ServiceDefaults.csproj" />
+  </ItemGroup>
 </Project>

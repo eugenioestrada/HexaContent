@@ -6,7 +6,7 @@ namespace HexaContent.Minio.Client;
 
 public static class MinioExtensions
 {
-	private const string DefaultConfigSectionName = "HexaContent:Minio:Client";
+	private const string DefaultConfigSectionName = "Aspire:Minio:Client";
 
 	public static void AddMinioClient(
 		this IHostApplicationBuilder builder,
@@ -14,7 +14,7 @@ public static class MinioExtensions
 		Action<MinioClientSettings>? configureSettings = null) =>
 		AddMinioClient(
 			builder,
-			MinioClientSettings.DefaultConfigSectionName,
+			DefaultConfigSectionName,
 			configureSettings,
 			connectionName,
 			serviceKey: null);
@@ -33,6 +33,11 @@ public static class MinioExtensions
 		builder.Configuration
 			   .GetSection(configurationSectionName)
 			   .Bind(settings);
+
+		if (builder.Configuration.GetConnectionString(connectionName) is string connectionString)
+		{
+			settings.Endpoint = connectionString;
+		}
 
 		configureSettings?.Invoke(settings);
 

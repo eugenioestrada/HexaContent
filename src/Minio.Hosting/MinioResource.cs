@@ -1,7 +1,4 @@
-﻿using Aspire.Hosting;
-using Aspire.Hosting.ApplicationModel;
-
-namespace HexaContent.Minio.Hosting;
+﻿namespace Aspire.Hosting.ApplicationModel;
 
 public sealed class MinioResource(string name) : ContainerResource(name), IResourceWithConnectionString, IResourceWithEnvironment
 {
@@ -25,7 +22,8 @@ public sealed class MinioResource(string name) : ContainerResource(name), IResou
 	public EndpointReference ConsoleEndpoint => _consoleEndpoint ??= new(this, ConsoleEndpointName);
 
 	public ReferenceExpression ConnectionStringExpression =>
-	   ReferenceExpression.Create(
-			$"{PrimaryEndpoint.Property(EndpointProperty.Host)}:{PrimaryEndpoint.Property(EndpointProperty.Port)}");
+		ReferenceExpression.Create(
+			$"http://{PrimaryEndpoint.Property(EndpointProperty.Host)}:{PrimaryEndpoint.Property(EndpointProperty.Port)}");
+
 }
 
