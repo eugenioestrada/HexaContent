@@ -5,12 +5,10 @@ namespace HexaContent.StaticForge;
 public class Worker : BackgroundService
 {
     private readonly ILogger<Worker> _logger;
-	private readonly MinioFactory _minioFactory;
 
-	public Worker(ILogger<Worker> logger, MinioFactory minioFactory)
+	public Worker(ILogger<Worker> logger)
     {
         _logger = logger;
-		_minioFactory = minioFactory;
 	}
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
