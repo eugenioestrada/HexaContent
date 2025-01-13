@@ -1,4 +1,6 @@
-﻿namespace Aspire.Hosting.ApplicationModel;
+﻿using Aspire.Hosting.ApplicationModel;
+
+namespace Aspire.Hosting;
 
 public sealed class MinioResource(string name) : ContainerResource(name), IResourceWithConnectionString, IResourceWithEnvironment
 {
