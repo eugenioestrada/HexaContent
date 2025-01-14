@@ -20,5 +20,6 @@ app.MapControllerRoute(
 	.WithStaticAssets();
 
 app.Services.EnsureDatabaseCreated();
+await app.Services.SeedTestDataAsync();
 
 app.Run();
