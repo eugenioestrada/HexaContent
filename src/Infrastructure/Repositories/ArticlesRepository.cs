@@ -79,9 +79,11 @@ public class ArticlesRepository : RepositoryBase, IArticlesRepository
     {
         var entity = await _databaseContext.Articles.FindAsync(id);
 
-        if (entity != null)
+		if (entity != null)
         {
-            return _mapper.Map<Article>(entity);
+			entity.Author = await _databaseContext.Authors.FindAsync(entity.AuthorId);
+
+			return _mapper.Map<Article>(entity);
         }
 
         return null;

@@ -27,6 +27,7 @@ public class HomeController : Controller
     public async Task<IActionResult> Edit(int id)
     {
         var article = await _articlesRepository.FindAsync(id);
+
         if (article == null)
         {
             return NotFound();

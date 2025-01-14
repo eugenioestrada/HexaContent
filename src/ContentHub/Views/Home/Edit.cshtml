@@ -7,13 +7,25 @@
         <label asp-for="Title"></label>
         <input asp-for="Title" />
     </div>
+    
     <div>
         <label asp-for="Content"></label>
         <textarea asp-for="Content"></textarea>
     </div>
+
     <div>
-        <label asp-for="Author.Name"></label>
-        <input asp-for="Author.Name" />
+        <label asp-for="CreatedAt"></label>
+        <textarea asp-for="CreatedAt"></textarea>
     </div>
+
+    <div>
+        <label asp-for="UpdatedAt"></label>
+        <textarea asp-for="UpdatedAt"></textarea>
+    </div>
+
+    <div>
+        <input type="hidden" asp-for="Author.Id" />
+    </div>
+
     <button type="submit">Save Changes</button>
 </form>
