@@ -1,8 +1,10 @@
-@model HexaContent.Core.Model.Article
+@model HexaContent.ContentHub.Models.EditArticleModel
 
 <h1>Edit Article</h1>
 
-<form asp-action="Update" method="post">
+<form asp-action="Update"  method="post">
+    <input type="hidden" asp-for="Id" />
+
     <div>
         <label asp-for="Title"></label>
         <input asp-for="Title" />
@@ -14,18 +16,18 @@
     </div>
 
     <div>
+        <input type="hidden" asp-for="AuthorId" />
+    </div>
+
+    <div>
         <label asp-for="CreatedAt"></label>
-        <textarea asp-for="CreatedAt"></textarea>
+        <input asp-for="CreatedAt" type="datetime" readonly />
     </div>
 
     <div>
         <label asp-for="UpdatedAt"></label>
-        <textarea asp-for="UpdatedAt"></textarea>
+        <input asp-for="UpdatedAt" type="datetime" readonly />
     </div>
-
-    <div>
-        <input type="hidden" asp-for="Author.Id" />
-    </div>
-
+    
     <button type="submit">Save Changes</button>
 </form>

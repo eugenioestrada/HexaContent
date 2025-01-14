@@ -32,11 +32,18 @@ public class HomeController : Controller
         {
             return NotFound();
         }
-        return View(article);
+        return View(new EditArticleModel {
+            Id = article.Id,
+			Content = article.Content,
+			Title = article.Title,
+			AuthorId = article.Author.Id,
+			CreatedAt = article.CreatedAt,
+			UpdatedAt = article.UpdatedAt
+		});
     }
 
     [HttpPost]
-    public async Task<IActionResult> Update(Article article)
+    public async Task<IActionResult> Update(EditArticleModel article)
     {
         if (!ModelState.IsValid)
         {
@@ -51,8 +58,8 @@ public class HomeController : Controller
 
         existingArticle.Title = article.Title;
         existingArticle.Content = article.Content;
-        existingArticle.Author.Name = article.Author.Name;
-        existingArticle.UpdatedAt = DateTime.UtcNow;
+        existingArticle.Author = new Author { Id = article.AuthorId };
+		existingArticle.UpdatedAt = DateTime.UtcNow;
 
         await _articlesRepository.UpdateAsync(existingArticle);
 
