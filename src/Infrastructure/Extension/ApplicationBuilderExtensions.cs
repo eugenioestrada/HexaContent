@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using HexaContent.Core.Repositories;
 using HexaContent.Infrastructure.Repositories;
 using HexaContent.Infrastructure.Mapping;
+using HexaContent.Core.Model;
 
 namespace HexaContent.Infrastructure.Extension;
 
@@ -58,6 +59,25 @@ public static class ApplicationBuilderExtensions
         using (var scope = serviceProvider.CreateScope())
         {
             return scope.ServiceProvider.GetRequiredService<DatabaseContext>().Database.EnsureCreated();
+        }
+    }
+
+    /// <summary>
+    /// Seeds test data into the database.
+    /// </summary>
+    /// <param name="serviceProvider">The service provider.</param>
+    public static async Task SeedTestDataAsync(this IServiceProvider serviceProvider)
+    {
+        using (var scope = serviceProvider.CreateScope())
+        {
+            var authorsRepository = scope.ServiceProvider.GetRequiredService<IAuthorsRepository>();
+            var articlesRepository = scope.ServiceProvider.GetRequiredService<IArticlesRepository>();
+
+            var author = new Author(1, "Test Author", "author@example.com", "Bio", DateTime.UtcNow, DateTime.UtcNow);
+            await authorsRepository.AddAsync(author);
+
+            var article = new Article(1, "Test Article", "Content", DateTime.UtcNow, DateTime.UtcNow, author);
+            await articlesRepository.AddAsync(article);
         }
     }
 }
