@@ -1,0 +1,33 @@
+@model HexaContent.ContentHub.Models.EditArticleModel
+
+<h1>Edit Article</h1>
+
+<form asp-action="Update"  method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div>
+        <label asp-for="Title"></label>
+        <input asp-for="Title" />
+    </div>
+    
+    <div>
+        <label asp-for="Content"></label>
+        <textarea asp-for="Content"></textarea>
+    </div>
+
+    <div>
+        <input type="hidden" asp-for="AuthorId" />
+    </div>
+
+    <div>
+        <label asp-for="CreatedAt"></label>
+        <input asp-for="CreatedAt" type="datetime" readonly />
+    </div>
+
+    <div>
+        <label asp-for="UpdatedAt"></label>
+        <input asp-for="UpdatedAt" type="datetime" readonly />
+    </div>
+    
+    <button type="submit">Save Changes</button>
+</form>

@@ -33,8 +33,13 @@ public class ArticleEntity
     /// </summary>
     public DateTime UpdatedAt { get; set; }
 
-    /// <summary>
-    /// Gets or sets the author of the article.
+	/// <summary>
+	/// Gets or sets the unique identifier for the author of the article.
     /// </summary>
-    public AuthorEntity Author { get; set; }
+	public int AuthorId { get; set; }
+
+	/// <summary>
+	/// Gets or sets the author of the article.
+	/// </summary>
+	public AuthorEntity Author { get; set; }
 }

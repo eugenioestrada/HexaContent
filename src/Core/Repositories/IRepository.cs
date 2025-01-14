@@ -37,4 +37,10 @@ public interface IRepository<TModel, TKey>
     /// </summary>
     /// <returns>A list of all entities.</returns>
     Task<List<TModel>> GetAllAsync();
+
+    /// <summary>
+    /// Updates an existing entity in the repository.
+    /// </summary>
+    /// <param name="model">The entity to update.</param>
+    Task UpdateAsync(TModel model);
 }

@@ -13,6 +13,7 @@
                 <h2>@article.Title</h2>
                 <p>@article.Content</p>
                 <p><em>By @article.Author.Name on @article.CreatedAt.ToString("MMMM dd, yyyy")</em></p>
+                <a asp-action="Edit" asp-route-id="@article.Id">Edit</a>
             </li>
         }
     </ul>
