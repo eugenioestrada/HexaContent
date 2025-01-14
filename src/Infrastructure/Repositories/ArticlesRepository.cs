@@ -70,4 +70,14 @@ public class ArticlesRepository : RepositoryBase, IArticlesRepository
 
         return null;
     }
+
+    /// <summary>
+    /// Retrieves all articles from the repository.
+    /// </summary>
+    /// <returns>A list of all articles.</returns>
+    public async Task<List<Article>> GetAllAsync()
+    {
+        var entities = await _databaseContext.Articles.Include(a => a.Author).ToListAsync();
+        return _mapper.Map<List<Article>>(entities);
+    }
 }

@@ -31,4 +31,10 @@ public interface IRepository<TModel, TKey>
     /// </summary>
     /// <returns>The total number of entities.</returns>
     Task<int> CountAsync();
+
+    /// <summary>
+    /// Retrieves all entities from the repository.
+    /// </summary>
+    /// <returns>A list of all entities.</returns>
+    Task<List<TModel>> GetAllAsync();
 }

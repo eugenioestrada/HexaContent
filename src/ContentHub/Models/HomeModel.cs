@@ -2,4 +2,5 @@
 
 public class HomeModel
 {
+    public List<Article> Articles { get; set; }
 }
