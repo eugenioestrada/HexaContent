@@ -19,6 +19,7 @@ public static class ApplicationBuilderExtensions
 	public static void AddRepositories(this IHostApplicationBuilder builder)
 	{
 		builder.Services.AddScoped<IArticlesRepository, ArticlesRepository>();
+		builder.Services.AddScoped<IAuthorsRepository, AuthorsRepository>();
 	}
 
 	public static void AddDbContext(this IHostApplicationBuilder builder, IConfiguration configuration)

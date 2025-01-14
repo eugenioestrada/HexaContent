@@ -9,7 +9,12 @@ builder.AddRepositories();
 
 var app = builder.Build();
 
-app.MapGet("/", async (IArticlesRepository repository) => await repository.CountAsync());
+app.MapGet("/", async (IArticlesRepository articlesRepository, IAuthorsRepository authorsRepository) => 
+{
+    var articleCount = await articlesRepository.CountAsync();
+    var authorCount = await authorsRepository.CountAsync();
+    return new { articleCount, authorCount };
+});
 
 app.Services.EnsureDatabaseCreated();
 
