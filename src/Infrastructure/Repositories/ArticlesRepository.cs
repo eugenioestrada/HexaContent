@@ -9,20 +9,15 @@ namespace HexaContent.Infrastructure.Repositories;
 /// <summary>
 /// Repository for managing articles in the database.
 /// </summary>
-public class ArticlesRepository : IArticlesRepository
+public class ArticlesRepository : RepositoryBase, IArticlesRepository
 {
-    protected readonly DatabaseContext _databaseContext;
-    protected readonly IMapper _mapper;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="ArticlesRepository"/> class.
     /// </summary>
     /// <param name="databaseContext">The database context.</param>
     /// <param name="mapper">The AutoMapper instance.</param>
-    public ArticlesRepository(DatabaseContext databaseContext, IMapper mapper)
+    public ArticlesRepository(DatabaseContext databaseContext, IMapper mapper) : base(databaseContext, mapper)
     {
-        this._databaseContext = databaseContext;
-        this._mapper = mapper;
     }
 
     /// <summary>

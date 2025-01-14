@@ -9,21 +9,16 @@ namespace HexaContent.Infrastructure.Repositories;
 /// <summary>
 /// Repository for managing authors in the database.
 /// </summary>
-public class AuthorsRepository : IAuthorsRepository
+public class AuthorsRepository : RepositoryBase, IAuthorsRepository
 {
-    protected readonly DatabaseContext _databaseContext;
-    protected readonly IMapper _mapper;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="AuthorsRepository"/> class.
     /// </summary>
     /// <param name="databaseContext">The database context.</param>
     /// <param name="mapper">The AutoMapper instance.</param>
-    public AuthorsRepository(DatabaseContext databaseContext, IMapper mapper)
-    {
-        this._databaseContext = databaseContext;
-        this._mapper = mapper;
-    }
+    public AuthorsRepository(DatabaseContext databaseContext, IMapper mapper) : base(databaseContext, mapper)
+	{
+	}
 
     /// <summary>
     /// Adds a new author to the repository.
