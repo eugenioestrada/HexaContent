@@ -5,11 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - HexaContent</title>
     <script type="importmap"></script>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/HexaContent.ContentHub.styles.css" asp-append-version="true" />
 </head>
 <body>
-    @RenderBody()
-       
+    <header>
+        <span class="header-name">HexaContent</span>
+    </header>
+
+    <main>
+        @RenderBody()
+    </main>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
