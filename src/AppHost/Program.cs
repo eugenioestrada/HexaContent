@@ -11,8 +11,7 @@ var rabbitmq = builder.AddRabbitMQ("messaging")
 // MySQL
 
 var mysql = builder.AddMySql("mysql")
-	.WithPhpMyAdmin()
-	.WithLifetime(ContainerLifetime.Persistent);
+	.WithPhpMyAdmin();
 
 var mysqldb = mysql.AddDatabase("mysqldb");
 
@@ -28,13 +27,17 @@ var storage = builder.AddMinio("storage");
 
 builder.AddProject<HexaContent_ContentHub>("hub")
 	.WithReference(rabbitmq)
-	.WithReference(mysqldb);
+	.WithReference(mysqldb)
+	.WaitFor(rabbitmq)
+	.WaitFor(mysqldb);
 
 // Static Forge
 
 builder.AddProject<HexaContent_StaticForge>("forge")
 	.WithReference(rabbitmq)
 	.WithReference(mysqldb)
-	.WithReference(storage);
+	.WithReference(storage)
+	.WaitFor(rabbitmq)
+	.WaitFor(mysqldb);
 
 builder.Build().Run();
