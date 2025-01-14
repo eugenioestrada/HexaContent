@@ -70,4 +70,14 @@ public class AuthorsRepository : RepositoryBase, IAuthorsRepository
 
         return null;
     }
+
+    /// <summary>
+    /// Retrieves all authors from the repository.
+    /// </summary>
+    /// <returns>A list of all authors.</returns>
+    public async Task<List<Author>> GetAllAsync()
+    {
+        var entities = await _databaseContext.Authors.ToListAsync();
+        return _mapper.Map<List<Author>>(entities);
+    }
 }

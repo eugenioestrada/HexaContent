@@ -1,6 +1,23 @@
-﻿@{
-}
+@model HexaContent.ContentHub.Models.HomeModel
 
 <h1>
     Welcome to Content Hub
 </h1>
+
+@if (Model.Articles != null && Model.Articles.Any())
+{
+    <ul>
+        @foreach (var article in Model.Articles)
+        {
+            <li>
+                <h2>@article.Title</h2>
+                <p>@article.Content</p>
+                <p><em>By @article.Author.Name on @article.CreatedAt.ToString("MMMM dd, yyyy")</em></p>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No articles available.</p>
+}
