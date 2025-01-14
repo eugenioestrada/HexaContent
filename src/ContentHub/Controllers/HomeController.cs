@@ -8,7 +8,7 @@ public class HomeController : Controller
 {
     private readonly IArticlesRepository _articlesRepository;
 
-    public HomeController(IArticlesRepository articlesRepository)
+    public HomeController([FromServices] IArticlesRepository articlesRepository)
     {
         _articlesRepository = articlesRepository;
     }
