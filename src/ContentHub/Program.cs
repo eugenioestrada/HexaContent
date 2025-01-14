@@ -6,15 +6,18 @@ builder.AddServiceDefaults();
 builder.AddAutoMapper();
 builder.AddDbContext(builder.Configuration);
 builder.AddRepositories();
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-app.MapGet("/", async (IArticlesRepository articlesRepository, IAuthorsRepository authorsRepository) => 
-{
-    var articleCount = await articlesRepository.CountAsync();
-    var authorCount = await authorsRepository.CountAsync();
-    return new { articleCount, authorCount };
-});
+app.UseRouting();
+
+app.MapStaticAssets();
+
+app.MapControllerRoute(
+	name: "default",
+	pattern: "{controller=Home}/{action=Index}/{id?}")
+	.WithStaticAssets();
 
 app.Services.EnsureDatabaseCreated();
 

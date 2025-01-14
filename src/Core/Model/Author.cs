@@ -3,6 +3,4 @@
 /// <summary>
 /// Represents an author in the system.
 /// </summary>
-public class Author
-{
-}
+public record Author(int Id, string Name, string Email, string Bio, DateTime CreatedAt, DateTime UpdatedAt, List<Article>? Articles = null);

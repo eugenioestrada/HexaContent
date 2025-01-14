@@ -3,6 +3,4 @@
 /// <summary>
 /// Represents an article in the system.
 /// </summary>
-public class Article
-{
-}
+public record Article(int Id, string Title, string Content, DateTime CreatedAt, DateTime UpdatedAt, Author Author);
