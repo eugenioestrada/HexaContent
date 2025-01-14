@@ -15,5 +15,17 @@
         <label asp-for="Author.Name"></label>
         <input asp-for="Author.Name" />
     </div>
+    <div>
+        <label asp-for="CreatedAt"></label>
+        <input asp-for="CreatedAt" type="datetime" readonly />
+    </div>
+    <div>
+        <label asp-for="UpdatedAt"></label>
+        <input asp-for="UpdatedAt" type="datetime" readonly />
+    </div>
+    <div>
+        <label asp-for="AuthorId"></label>
+        <input asp-for="AuthorId" type="number" />
+    </div>
     <button type="submit">Save Changes</button>
 </form>
