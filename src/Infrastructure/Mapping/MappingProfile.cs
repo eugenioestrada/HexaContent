@@ -8,7 +8,7 @@ public class MappingProfile : Profile
 {
 	public MappingProfile()
 	{
-		CreateMap<Article, ArticleEntity>().ReverseMap();
-		CreateMap<Author, AuthorEntity>().ReverseMap();
+		CreateMap<Article, ArticleEntity>().PreserveReferences().ReverseMap();
+		CreateMap<Author, AuthorEntity>().PreserveReferences().ReverseMap();
 	}
 }

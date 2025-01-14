@@ -24,12 +24,28 @@ public class ArticlesRepository : RepositoryBase, IArticlesRepository
     /// Adds a new article to the repository.
     /// </summary>
     /// <param name="model">The article to add.</param>
-    public Task AddAsync(Article model)
+    public async Task AddAsync(Article model)
     {
-        var entity = _mapper.Map<ArticleEntity>(model);
-        _databaseContext.Add(entity);
-        return _databaseContext.SaveChangesAsync();
-    }
+		// Check if the author exists
+		var authorEntity = await _databaseContext.Authors
+			.FirstOrDefaultAsync(a => a.Id == model.Author.Id);
+
+		// If the author does not exist, create a new author
+		if (authorEntity == null)
+		{
+			authorEntity = _mapper.Map<AuthorEntity>(model.Author);
+			_databaseContext.Authors.Add(authorEntity);
+			await _databaseContext.SaveChangesAsync();
+		}
+
+		// Map the article model to the article entity
+		var articleEntity = _mapper.Map<ArticleEntity>(model);
+		articleEntity.Author = authorEntity;
+
+		// Add the article entity to the database
+		_databaseContext.Articles.Add(articleEntity);
+		await _databaseContext.SaveChangesAsync();
+	}
 
     /// <summary>
     /// Counts the total number of articles in the repository.

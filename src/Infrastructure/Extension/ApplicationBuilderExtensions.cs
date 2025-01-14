@@ -73,10 +73,28 @@ public static class ApplicationBuilderExtensions
             var authorsRepository = scope.ServiceProvider.GetRequiredService<IAuthorsRepository>();
             var articlesRepository = scope.ServiceProvider.GetRequiredService<IArticlesRepository>();
 
-            var author = new Author(1, "Test Author", "author@example.com", "Bio", DateTime.UtcNow, DateTime.UtcNow);
+            var author = new Author
+            {
+                Id = 1,
+                Name = "Test Author",
+                Email = "author@example.com",
+                Bio = "Bio",
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
+            };
+
             await authorsRepository.AddAsync(author);
 
-            var article = new Article(1, "Test Article", "Content", DateTime.UtcNow, DateTime.UtcNow, author);
+            var article = new Article
+            {
+                Id = 1,
+                Title = "Test Article",
+                Content = "Content",
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+                Author = author
+            };
+
             await articlesRepository.AddAsync(article);
         }
     }
