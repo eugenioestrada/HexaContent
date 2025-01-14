@@ -9,34 +9,55 @@ using HexaContent.Infrastructure.Mapping;
 
 namespace HexaContent.Infrastructure.Extension;
 
+/// <summary>
+/// Provides extension methods for configuring the application builder.
+/// </summary>
 public static class ApplicationBuilderExtensions
 {
-	public static void AddAutoMapper(this IHostApplicationBuilder builder)
-	{
-		builder.Services.AddAutoMapper(typeof(MappingProfile));
-	}
+    /// <summary>
+    /// Adds AutoMapper to the application builder.
+    /// </summary>
+    /// <param name="builder">The application builder.</param>
+    public static void AddAutoMapper(this IHostApplicationBuilder builder)
+    {
+        builder.Services.AddAutoMapper(typeof(MappingProfile));
+    }
 
-	public static void AddRepositories(this IHostApplicationBuilder builder)
-	{
-		builder.Services.AddScoped<IArticlesRepository, ArticlesRepository>();
-		builder.Services.AddScoped<IAuthorsRepository, AuthorsRepository>();
-	}
+    /// <summary>
+    /// Adds repositories to the application builder.
+    /// </summary>
+    /// <param name="builder">The application builder.</param>
+    public static void AddRepositories(this IHostApplicationBuilder builder)
+    {
+        builder.Services.AddScoped<IArticlesRepository, ArticlesRepository>();
+        builder.Services.AddScoped<IAuthorsRepository, AuthorsRepository>();
+    }
 
-	public static void AddDbContext(this IHostApplicationBuilder builder, IConfiguration configuration)
-	{
-		builder.Services.AddDbContext<DatabaseContext>(options =>
-		{
-			ServerVersion serverVersion = new MySqlServerVersion(new Version(9, 1, 0));
-			string connectionString = configuration.GetConnectionString("mysqldb");
-			options.UseMySql(connectionString, serverVersion);
-		});
-	}
+    /// <summary>
+    /// Adds the database context to the application builder.
+    /// </summary>
+    /// <param name="builder">The application builder.</param>
+    /// <param name="configuration">The configuration.</param>
+    public static void AddDbContext(this IHostApplicationBuilder builder, IConfiguration configuration)
+    {
+        builder.Services.AddDbContext<DatabaseContext>(options =>
+        {
+            ServerVersion serverVersion = new MySqlServerVersion(new Version(9, 1, 0));
+            string connectionString = configuration.GetConnectionString("mysqldb");
+            options.UseMySql(connectionString, serverVersion);
+        });
+    }
 
-	public static bool EnsureDatabaseCreated(this IServiceProvider serviceProvider)
-	{
-		using (var scope = serviceProvider.CreateScope())
-		{
-			return scope.ServiceProvider.GetRequiredService<DatabaseContext>().Database.EnsureCreated();
-		}
-	}
+    /// <summary>
+    /// Ensures that the database is created.
+    /// </summary>
+    /// <param name="serviceProvider">The service provider.</param>
+    /// <returns>True if the database is created; otherwise, false.</returns>
+    public static bool EnsureDatabaseCreated(this IServiceProvider serviceProvider)
+    {
+        using (var scope = serviceProvider.CreateScope())
+        {
+            return scope.ServiceProvider.GetRequiredService<DatabaseContext>().Database.EnsureCreated();
+        }
+    }
 }
