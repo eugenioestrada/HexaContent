@@ -73,29 +73,77 @@ public static class ApplicationBuilderExtensions
             var authorsRepository = scope.ServiceProvider.GetRequiredService<IAuthorsRepository>();
             var articlesRepository = scope.ServiceProvider.GetRequiredService<IArticlesRepository>();
 
-            var author = new Author
+            var authors = new List<Author>
             {
-                Id = 1,
-                Name = "Test Author",
-                Email = "author@example.com",
-                Bio = "Bio",
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                new Author
+                {
+                    Id = 1,
+                    Name = "Test Author",
+                    Email = "author@example.com",
+                    Bio = "Bio",
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                },
+                new Author
+                {
+                    Id = 2,
+                    Name = "Jane Doe",
+                    Email = "jane.doe@example.com",
+                    Bio = "Jane's bio",
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                },
+                new Author
+                {
+                    Id = 3,
+                    Name = "John Smith",
+                    Email = "john.smith@example.com",
+                    Bio = "John's bio",
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                }
             };
 
-            await authorsRepository.AddAsync(author);
-
-            var article = new Article
+            foreach (var author in authors)
             {
-                Id = 1,
-                Title = "Test Article",
-                Content = "Content",
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow,
-                Author = author
+                await authorsRepository.AddAsync(author);
+            }
+
+            var articles = new List<Article>
+            {
+                new Article
+                {
+                    Id = 1,
+                    Title = "Test Article",
+                    Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow,
+                    Author = authors[0]
+                },
+                new Article
+                {
+                    Id = 2,
+                    Title = "Another Article",
+                    Content = "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow,
+                    Author = authors[1]
+                },
+                new Article
+                {
+                    Id = 3,
+                    Title = "Yet Another Article",
+                    Content = "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow,
+                    Author = authors[2]
+                }
             };
 
-            await articlesRepository.AddAsync(article);
+            foreach (var article in articles)
+            {
+                await articlesRepository.AddAsync(article);
+            }
         }
     }
 }
