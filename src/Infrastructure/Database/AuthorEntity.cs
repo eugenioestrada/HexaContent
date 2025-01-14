@@ -1,6 +1,9 @@
-﻿namespace HexaContent.Infrastructure.Database;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-public class Author
+namespace HexaContent.Infrastructure.Database;
+
+[Table("authors")]
+public class AuthorEntity
 {
 	public int Id { get; set; }
 	public string Name { get; set; }
@@ -8,5 +11,5 @@ public class Author
 	public string Bio { get; set; }
 	public DateTime CreatedAt { get; set; }
 	public DateTime UpdatedAt { get; set; }
-	public List<Article> Articles { get; } = new();
+	public List<ArticleEntity> Articles { get; } = new();
 }
