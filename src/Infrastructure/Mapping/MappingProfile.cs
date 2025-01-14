@@ -9,5 +9,6 @@ public class MappingProfile : Profile
 	public MappingProfile()
 	{
 		CreateMap<Article, ArticleEntity>().ReverseMap();
+		CreateMap<Author, AuthorEntity>().ReverseMap();
 	}
 }
