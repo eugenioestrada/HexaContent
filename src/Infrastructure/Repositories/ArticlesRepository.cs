@@ -96,4 +96,31 @@ public class ArticlesRepository : RepositoryBase, IArticlesRepository
         var entities = await _databaseContext.Articles.Include(a => a.Author).ToListAsync();
         return _mapper.Map<List<Article>>(entities);
     }
+
+    /// <summary>
+    /// Updates an existing article in the repository.
+    /// </summary>
+    /// <param name="model">The article to update.</param>
+    public async Task UpdateAsync(Article model)
+    {
+        var entity = await _databaseContext.Articles.FindAsync(model.Id);
+
+        if (entity != null)
+        {
+            entity.Title = model.Title;
+            entity.Content = model.Content;
+            entity.UpdatedAt = model.UpdatedAt;
+
+            if (entity.Author.Id != model.Author.Id)
+            {
+                var authorEntity = await _databaseContext.Authors.FindAsync(model.Author.Id);
+                if (authorEntity != null)
+                {
+                    entity.Author = authorEntity;
+                }
+            }
+
+            await _databaseContext.SaveChangesAsync();
+        }
+    }
 }

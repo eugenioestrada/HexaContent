@@ -80,4 +80,23 @@ public class AuthorsRepository : RepositoryBase, IAuthorsRepository
         var entities = await _databaseContext.Authors.ToListAsync();
         return _mapper.Map<List<Author>>(entities);
     }
+
+    /// <summary>
+    /// Updates an existing author in the repository.
+    /// </summary>
+    /// <param name="model">The author to update.</param>
+    public async Task UpdateAsync(Author model)
+    {
+        var entity = await _databaseContext.Authors.FindAsync(model.Id);
+
+        if (entity != null)
+        {
+            entity.Name = model.Name;
+            entity.Email = model.Email;
+            entity.Bio = model.Bio;
+            entity.UpdatedAt = model.UpdatedAt;
+
+            await _databaseContext.SaveChangesAsync();
+        }
+    }
 }
