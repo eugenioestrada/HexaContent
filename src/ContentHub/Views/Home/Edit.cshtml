@@ -1,0 +1,19 @@
+@model HexaContent.Core.Model.Article
+
+<h1>Edit Article</h1>
+
+<form asp-action="Update" method="post">
+    <div>
+        <label asp-for="Title"></label>
+        <input asp-for="Title" />
+    </div>
+    <div>
+        <label asp-for="Content"></label>
+        <textarea asp-for="Content"></textarea>
+    </div>
+    <div>
+        <label asp-for="Author.Name"></label>
+        <input asp-for="Author.Name" />
+    </div>
+    <button type="submit">Save Changes</button>
+</form>
