@@ -6,17 +6,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HexaContent.Infrastructure.Repositories;
 
+/// <summary>
+/// Repository for managing authors in the database.
+/// </summary>
 public class AuthorsRepository : IAuthorsRepository
 {
     protected readonly DatabaseContext _databaseContext;
     protected readonly IMapper _mapper;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AuthorsRepository"/> class.
+    /// </summary>
+    /// <param name="databaseContext">The database context.</param>
+    /// <param name="mapper">The AutoMapper instance.</param>
     public AuthorsRepository(DatabaseContext databaseContext, IMapper mapper)
     {
         this._databaseContext = databaseContext;
         this._mapper = mapper;
     }
 
+    /// <summary>
+    /// Adds a new author to the repository.
+    /// </summary>
+    /// <param name="model">The author to add.</param>
     public Task AddAsync(Author model)
     {
         var entity = _mapper.Map<AuthorEntity>(model);
@@ -24,11 +36,19 @@ public class AuthorsRepository : IAuthorsRepository
         return _databaseContext.SaveChangesAsync();
     }
 
+    /// <summary>
+    /// Counts the total number of authors in the repository.
+    /// </summary>
+    /// <returns>The total number of authors.</returns>
     public Task<int> CountAsync()
     {
         return _databaseContext.Authors.CountAsync();
     }
 
+    /// <summary>
+    /// Deletes an author by its identifier.
+    /// </summary>
+    /// <param name="id">The identifier of the author.</param>
     public Task DeleteAsync(int id)
     {
         _databaseContext.Remove<AuthorEntity>(new()
@@ -39,6 +59,11 @@ public class AuthorsRepository : IAuthorsRepository
         return this._databaseContext.SaveChangesAsync();
     }
 
+    /// <summary>
+    /// Finds an author by its identifier.
+    /// </summary>
+    /// <param name="id">The identifier of the author.</param>
+    /// <returns>The author if found; otherwise, null.</returns>
     public async Task<Author?> FindAsync(int id)
     {
         var entity = await _databaseContext.Authors.FindAsync(id);

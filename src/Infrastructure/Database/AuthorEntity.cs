@@ -2,14 +2,44 @@
 
 namespace HexaContent.Infrastructure.Database;
 
+/// <summary>
+/// Represents an author entity in the database.
+/// </summary>
 [Table("authors")]
 public class AuthorEntity
 {
-	public int Id { get; set; }
-	public string Name { get; set; }
-	public string Email { get; set; }
-	public string Bio { get; set; }
-	public DateTime CreatedAt { get; set; }
-	public DateTime UpdatedAt { get; set; }
-	public List<ArticleEntity> Articles { get; } = new();
+    /// <summary>
+    /// Gets or sets the unique identifier for the author.
+    /// </summary>
+    public int Id { get; set; }
+
+    /// <summary>
+    /// Gets or sets the name of the author.
+    /// </summary>
+    public string Name { get; set; }
+
+    /// <summary>
+    /// Gets or sets the email of the author.
+    /// </summary>
+    public string Email { get; set; }
+
+    /// <summary>
+    /// Gets or sets the bio of the author.
+    /// </summary>
+    public string Bio { get; set; }
+
+    /// <summary>
+    /// Gets or sets the date and time when the author was created.
+    /// </summary>
+    public DateTime CreatedAt { get; set; }
+
+    /// <summary>
+    /// Gets or sets the date and time when the author was last updated.
+    /// </summary>
+    public DateTime UpdatedAt { get; set; }
+
+    /// <summary>
+    /// Gets the list of articles written by the author.
+    /// </summary>
+    public List<ArticleEntity> Articles { get; } = new();
 }
