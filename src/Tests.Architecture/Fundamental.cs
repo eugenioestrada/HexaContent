@@ -2,6 +2,7 @@
 using ArchUnitNET.Fluent;
 using ArchUnitNET.Loader;
 using ArchUnitNET.MSTestV2;
+using HexaContent.Core.Messaging;
 using HexaContent.Core.Repositories;
 using System.Reflection;
 using static ArchUnitNET.Fluent.ArchRuleDefinition;
@@ -31,6 +32,9 @@ public sealed class Fundamental
 		.As("Repositories");
 
 	private readonly IObjectProvider<Interface> RepositoriesPorts = Interfaces().That().ImplementInterface(typeof(IRepository)).As("Repositories Ports");
+
+	private readonly IObjectProvider<Class> Messages = Classes().That().ImplementInterface(typeof(IMessage)).As("Messages");
+
 	private static string FindName(string name) => Architecture.Assemblies.Where(a => a.Name.StartsWith($"{name},")).First().Name;
 
 	[TestMethod]
@@ -44,6 +48,13 @@ public sealed class Fundamental
 			.Be(InfrastructureLayer);
 
 		repositoriesShouldBeInInfrastructureLayer.Check(Architecture);
+
+		IArchRule messagesShouldBeInCoreLayer =
+			Classes()
+			.That()
+			.Are(Messages)
+			.Should()
+			.Be(CoreLayer);
 
 		IArchRule repositoryPortsShouldBeCoreLayer =
 			Interfaces()
@@ -75,5 +86,17 @@ public sealed class Fundamental
 				.HaveNameEndingWith("Repository");
 
 		repositoriesShouldEndWithRepository.Check(Architecture);
+	}
+
+	[TestMethod]
+	public void MessagesShouldEndWithMessage()
+	{
+		IArchRule messagesShouldEndWithMessage = Classes()
+				.That()
+				.ImplementInterface(typeof(IMessage))
+				.Should()
+				.HaveNameEndingWith("Message");
+
+		messagesShouldEndWithMessage.Check(Architecture);
 	}
 }

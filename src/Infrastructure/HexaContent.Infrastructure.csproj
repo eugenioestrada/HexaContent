@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Core\HexaContent.Core.csproj" />
+    <ProjectReference Include="..\Minio.Client\HexaContent.Minio.Client.csproj" />
   </ItemGroup>
 
 </Project>

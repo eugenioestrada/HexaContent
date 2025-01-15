@@ -7,6 +7,8 @@ using HexaContent.Core.Repositories;
 using HexaContent.Infrastructure.Repositories;
 using HexaContent.Infrastructure.Mapping;
 using HexaContent.Core.Model;
+using HexaContent.Core.Messaging;
+using HexaContent.Infrastructure.Messaging;
 
 namespace HexaContent.Infrastructure.Extension;
 
@@ -34,12 +36,18 @@ public static class ApplicationBuilderExtensions
         builder.Services.AddScoped<IAuthorsRepository, AuthorsRepository>();
     }
 
-    /// <summary>
-    /// Adds the database context to the application builder.
-    /// </summary>
-    /// <param name="builder">The application builder.</param>
-    /// <param name="configuration">The configuration.</param>
-    public static void AddDbContext(this IHostApplicationBuilder builder, IConfiguration configuration)
+    public static void AddMessageBus(this IHostApplicationBuilder builder)
+    {
+		builder.AddRabbitMQClient(connectionName: "messaging");
+		builder.Services.AddSingleton<IMessageBus, MessageBus>();
+	}
+
+	/// <summary>
+	/// Adds the database context to the application builder.
+	/// </summary>
+	/// <param name="builder">The application builder.</param>
+	/// <param name="configuration">The configuration.</param>
+	public static void AddDbContext(this IHostApplicationBuilder builder, IConfiguration configuration)
     {
         builder.Services.AddDbContext<DatabaseContext>(options =>
         {

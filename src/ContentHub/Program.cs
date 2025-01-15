@@ -1,3 +1,4 @@
+using HexaContent.Core.Messaging;
 using HexaContent.Infrastructure.Extension;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,7 @@ builder.AddServiceDefaults();
 builder.AddAutoMapper();
 builder.AddDbContext(builder.Configuration);
 builder.AddRepositories();
+builder.AddMessageBus();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

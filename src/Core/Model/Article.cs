@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents an article in the system.
 /// </summary>
-public class Article
+public sealed class Article
 {
 	/// <summary>
 	/// Gets or sets the unique identifier for the article.

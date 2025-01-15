@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents an author in the system.
 /// </summary>
-public class Author
+public sealed class Author
 {
 	/// <summary>
 	/// Gets or sets the unique identifier for the author.

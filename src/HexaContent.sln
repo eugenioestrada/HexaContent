@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexaContent.Minio.Client", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexaContent.Tests.Architecture", "Tests.Architecture\HexaContent.Tests.Architecture.csproj", "{3AA91CF9-918E-48F2-81BF-93C62C9CA991}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexaContent.Services", "Services\HexaContent.Services.csproj", "{12FE5CCE-EE23-41EF-8F5B-221AAF63A048}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,10 @@ Global
 		{3AA91CF9-918E-48F2-81BF-93C62C9CA991}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AA91CF9-918E-48F2-81BF-93C62C9CA991}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AA91CF9-918E-48F2-81BF-93C62C9CA991}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12FE5CCE-EE23-41EF-8F5B-221AAF63A048}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12FE5CCE-EE23-41EF-8F5B-221AAF63A048}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12FE5CCE-EE23-41EF-8F5B-221AAF63A048}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12FE5CCE-EE23-41EF-8F5B-221AAF63A048}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,5 +103,6 @@ Global
 		{B6685966-F3B3-4B8D-95A6-A8317EE30E53} = {78A2BA2A-5830-4FFD-B226-31B1460DD0FE}
 		{6A86AA1B-FD41-4BC2-9B8B-3F3E31022587} = {B6685966-F3B3-4B8D-95A6-A8317EE30E53}
 		{3AA91CF9-918E-48F2-81BF-93C62C9CA991} = {513F63A9-913C-430C-8DE4-7778202B675F}
+		{12FE5CCE-EE23-41EF-8F5B-221AAF63A048} = {87EBEF4B-7E06-428C-83EB-47C4B9A3DA52}
 	EndGlobalSection
 EndGlobal
