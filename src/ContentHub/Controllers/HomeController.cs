@@ -38,7 +38,8 @@ public class HomeController : Controller
 			Title = article.Title,
 			AuthorId = article.Author.Id,
 			CreatedAt = article.CreatedAt,
-			UpdatedAt = article.UpdatedAt
+			UpdatedAt = article.UpdatedAt,
+            Metadata = article.Metadata
 		});
     }
 
@@ -60,6 +61,7 @@ public class HomeController : Controller
         existingArticle.Content = article.Content;
         existingArticle.Author = new Author { Id = article.AuthorId };
 		existingArticle.UpdatedAt = DateTime.UtcNow;
+        existingArticle.Metadata = article.Metadata;
 
         await _articlesRepository.UpdateAsync(existingArticle);
 

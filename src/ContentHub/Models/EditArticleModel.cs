@@ -8,4 +8,5 @@ public class EditArticleModel
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
     public int AuthorId { get; set; }
+    public Dictionary<string, string> Metadata { get; set; } = new Dictionary<string, string>();
 }

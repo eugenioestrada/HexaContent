@@ -42,4 +42,9 @@ public class ArticleEntity
 	/// Gets or sets the author of the article.
 	/// </summary>
 	public AuthorEntity Author { get; set; }
+
+    /// <summary>
+    /// Gets or sets the metadata of the article as a dictionary of key-value pairs.
+    /// </summary>
+    public Dictionary<string, string> Metadata { get; set; } = new Dictionary<string, string>();
 }
