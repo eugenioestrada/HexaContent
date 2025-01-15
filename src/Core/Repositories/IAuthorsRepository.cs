@@ -1,4 +1,5 @@
 using HexaContent.Core.Model;
+using HexaContent.Core.Repositories.Generic;
 
 namespace HexaContent.Core.Repositories;
 
