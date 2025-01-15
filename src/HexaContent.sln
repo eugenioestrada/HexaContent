@@ -35,6 +35,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{B66859
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexaContent.Minio.Client", "Minio.Client\HexaContent.Minio.Client.csproj", "{6A86AA1B-FD41-4BC2-9B8B-3F3E31022587}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexaContent.Tests.Architecture", "Tests.Architecture\HexaContent.Tests.Architecture.csproj", "{3AA91CF9-918E-48F2-81BF-93C62C9CA991}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{6A86AA1B-FD41-4BC2-9B8B-3F3E31022587}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A86AA1B-FD41-4BC2-9B8B-3F3E31022587}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A86AA1B-FD41-4BC2-9B8B-3F3E31022587}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AA91CF9-918E-48F2-81BF-93C62C9CA991}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AA91CF9-918E-48F2-81BF-93C62C9CA991}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AA91CF9-918E-48F2-81BF-93C62C9CA991}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AA91CF9-918E-48F2-81BF-93C62C9CA991}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,5 +96,6 @@ Global
 		{C4CC2296-07DE-4F6B-8976-5F4B89B06E93} = {3369FE18-B9B5-4781-AFFF-2BE54297006D}
 		{B6685966-F3B3-4B8D-95A6-A8317EE30E53} = {78A2BA2A-5830-4FFD-B226-31B1460DD0FE}
 		{6A86AA1B-FD41-4BC2-9B8B-3F3E31022587} = {B6685966-F3B3-4B8D-95A6-A8317EE30E53}
+		{3AA91CF9-918E-48F2-81BF-93C62C9CA991} = {513F63A9-913C-430C-8DE4-7778202B675F}
 	EndGlobalSection
 EndGlobal
