@@ -38,5 +38,5 @@ public class Author
 	/// <summary>
 	/// Gets the list of articles written by the author.
 	/// </summary>
-	public List<Article> Articles { get; } = new();
+	public List<Article>? Articles { get; }
 }

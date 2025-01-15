@@ -33,5 +33,5 @@ public class Article
 	/// <summary>
 	/// Gets or sets the author of the article.
 	/// </summary>
-	public Author Author { get; set; }
+	public Author? Author { get; set; }
 }

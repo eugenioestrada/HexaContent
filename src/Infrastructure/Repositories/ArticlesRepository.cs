@@ -26,24 +26,15 @@ public class ArticlesRepository : RepositoryBase, IArticlesRepository
     /// <param name="model">The article to add.</param>
     public async Task AddAsync(Article model)
     {
-		// Check if the author exists
-		var authorEntity = await _databaseContext.Authors
-			.FirstOrDefaultAsync(a => a.Id == model.Author.Id);
-
-		// If the author does not exist, create a new author
-		if (authorEntity == null)
-		{
-			authorEntity = _mapper.Map<AuthorEntity>(model.Author);
-			_databaseContext.Authors.Add(authorEntity);
-			await _databaseContext.SaveChangesAsync();
-		}
-
 		// Map the article model to the article entity
 		var articleEntity = _mapper.Map<ArticleEntity>(model);
-		articleEntity.Author = authorEntity;
+		
+        articleEntity.AuthorId = model.Author.Id;
+        articleEntity.Author = null;
 
 		// Add the article entity to the database
 		_databaseContext.Articles.Add(articleEntity);
+
 		await _databaseContext.SaveChangesAsync();
 	}
 
@@ -78,16 +69,8 @@ public class ArticlesRepository : RepositoryBase, IArticlesRepository
     public async Task<Article?> FindAsync(int id)
     {
         var entity = await _databaseContext.Articles.FindAsync(id);
-
-		if (entity != null)
-        {
-			entity.Author = await _databaseContext.Authors.FindAsync(entity.AuthorId);
-
-			return _mapper.Map<Article>(entity);
-        }
-
-        return null;
-    }
+		return _mapper.Map<Article>(entity);
+	}
 
     /// <summary>
     /// Retrieves all articles from the repository.
@@ -95,7 +78,7 @@ public class ArticlesRepository : RepositoryBase, IArticlesRepository
     /// <returns>A list of all articles.</returns>
     public async Task<List<Article>> GetAllAsync()
     {
-        var entities = await _databaseContext.Articles.Include(a => a.Author).ToListAsync();
+        var entities = await _databaseContext.Articles.ToListAsync();
         return _mapper.Map<List<Article>>(entities);
     }
 
@@ -112,15 +95,7 @@ public class ArticlesRepository : RepositoryBase, IArticlesRepository
             entity.Title = model.Title;
             entity.Content = model.Content;
             entity.UpdatedAt = model.UpdatedAt;
-
-            if (entity.Author.Id != model.Author.Id)
-            {
-                var authorEntity = await _databaseContext.Authors.FindAsync(model.Author.Id);
-                if (authorEntity != null)
-                {
-                    entity.Author = authorEntity;
-                }
-            }
+            entity.AuthorId = model.Author.Id;
 
             await _databaseContext.SaveChangesAsync();
         }

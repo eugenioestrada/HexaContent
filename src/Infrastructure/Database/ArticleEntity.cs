@@ -5,7 +5,7 @@ namespace HexaContent.Infrastructure.Database;
 /// <summary>
 /// Represents an article entity in the database.
 /// </summary>
-[Table("articles")]
+[Table("article")]
 public class ArticleEntity
 {
     /// <summary>

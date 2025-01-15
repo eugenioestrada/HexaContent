@@ -1,8 +1,9 @@
-using HexaContent.Core.Repositories;
 using HexaContent.Infrastructure.Extension;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.AddServiceDefaults();
+
 builder.AddAutoMapper();
 builder.AddDbContext(builder.Configuration);
 builder.AddRepositories();

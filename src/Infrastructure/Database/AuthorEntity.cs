@@ -5,7 +5,7 @@ namespace HexaContent.Infrastructure.Database;
 /// <summary>
 /// Represents an author entity in the database.
 /// </summary>
-[Table("authors")]
+[Table("author")]
 public class AuthorEntity
 {
     /// <summary>
@@ -41,5 +41,5 @@ public class AuthorEntity
     /// <summary>
     /// Gets the list of articles written by the author.
     /// </summary>
-    public List<ArticleEntity> Articles { get; } = new();
+    public List<ArticleEntity>? Articles { get; }
 }
