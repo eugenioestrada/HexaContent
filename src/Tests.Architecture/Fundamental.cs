@@ -16,87 +16,66 @@ public sealed class Fundamental
 			System.Reflection.Assembly.Load("HexaContent.Infrastructure")
 		).Build();
 
-	private readonly IObjectProvider<IType> CoreLayer = Types()
-			.That()
-			.ResideInAssembly(FindName("HexaContent.Core"))
-			.As("Core Layer");
+	private readonly IObjectProvider<IType> CoreLayer =
+		Types().That().ResideInAssembly(FindName("HexaContent.Core"))
+		.As("Core Layer");
 
-	private readonly IObjectProvider<IType> InfrastructureLayer = Types()
-		.That()
-		.ResideInAssembly(FindName("HexaContent.Infrastructure"))
+	private readonly IObjectProvider<IType> InfrastructureLayer = 
+		Types().That().ResideInAssembly(FindName("HexaContent.Infrastructure"))
 		.As("Infrastructure Layer");
 
-	private readonly IObjectProvider<Class> Repositories = Classes()
-		.That()
-		.ImplementInterface(typeof(IRepository))
+	private readonly IObjectProvider<Class> Repositories = 
+		Classes().That().ImplementInterface(typeof(IRepository))
 		.As("Repositories");
 
-	private readonly IObjectProvider<Interface> RepositoriesPorts = Interfaces().That().ImplementInterface(typeof(IRepository)).As("Repositories Ports");
+	private readonly IObjectProvider<Interface> RepositoriesPorts = 
+		Interfaces().That().ImplementInterface(typeof(IRepository))
+		.As("Repositories Ports");
 
-	private readonly IObjectProvider<Class> Messages = Classes().That().ImplementInterface(typeof(IMessage)).As("Messages");
-
-	private static string FindName(string name) => Architecture.Assemblies.Where(a => a.Name.StartsWith($"{name},")).First().Name;
+	private readonly IObjectProvider<Class> Messages =
+		Classes().That().ImplementInterface(typeof(IMessage))
+		.As("Messages");
 
 	[TestMethod]
 	public void TypesShouldBeInCorrectLayer()
 	{
-		IArchRule repositoriesShouldBeInInfrastructureLayer = 
-			Classes()
-			.That()
-			.Are(Repositories)
-			.Should()
-			.Be(InfrastructureLayer);
+		Classes().That().Are(Repositories)
+			.Should().Be(InfrastructureLayer)
+			.Check(Architecture);
 
-		repositoriesShouldBeInInfrastructureLayer.Check(Architecture);
+		Classes().That().Are(Messages)
+			.Should().Be(CoreLayer)
+			.Check(Architecture);
 
-		IArchRule messagesShouldBeInCoreLayer =
-			Classes()
-			.That()
-			.Are(Messages)
-			.Should()
-			.Be(CoreLayer);
-
-		IArchRule repositoryPortsShouldBeCoreLayer =
-			Interfaces()
-			.That()
-			.Are(RepositoriesPorts)
-			.Should()
-			.Be(CoreLayer);
-
-		repositoryPortsShouldBeCoreLayer.Check(Architecture);
+		Interfaces().That().Are(RepositoriesPorts)
+			.Should().Be(CoreLayer)
+			.Check(Architecture);
 	}
 
 	[TestMethod]
 	public void CoreLayerShouldNotAccessInfrastructureLayer()
 	{
-		IArchRule coreLayerShouldNotAccessInfrastructureLayer = Types().That()
-			.Are(CoreLayer).Should().NotDependOnAny(InfrastructureLayer);
-
-		coreLayerShouldNotAccessInfrastructureLayer.Check(Architecture);
+		Types().That().Are(CoreLayer)
+			.Should().NotDependOnAny(InfrastructureLayer)
+			.Check(Architecture);
 	}
 
 
 	[TestMethod]
 	public void RepositoriesShouldEndWithRepository()
 	{
-		IArchRule repositoriesShouldEndWithRepository = Classes()
-				.That()
-				.ImplementInterface(typeof(IRepository))
-				.Should()
-				.HaveNameEndingWith("Repository");
-
-		repositoriesShouldEndWithRepository.Check(Architecture);
+		Classes().That().Are(Repositories)
+			.Should().HaveNameEndingWith("Repository")
+			.Check(Architecture);
 	}
 
 	[TestMethod]
 	public void MessagesShouldEndWithMessage()
 	{
-		IArchRule messagesShouldEndWithMessage = Classes()
-				.That()
-				.ImplementInterface(typeof(IMessage))
-				.Should()
-				.HaveNameEndingWith("Message");
-
-		messagesShouldEndWithMessage.Check(Architecture);
+		Classes().That().Are(Messages)
+			.Should().HaveNameEndingWith("Message")
+			.Check(Architecture);
 	}
+
+	private static string FindName(string name) => Architecture.Assemblies.Where(a => a.Name.StartsWith($"{name},")).First().Name;
 }
