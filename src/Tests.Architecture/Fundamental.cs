@@ -17,11 +17,11 @@ public sealed class Fundamental
 		).Build();
 
 	private readonly IObjectProvider<IType> CoreLayer =
-		Types().That().ResideInAssembly(FindName("HexaContent.Core"))
+		Types().That().ResideInAssembly(Name("HexaContent.Core"))
 		.As("Core Layer");
 
 	private readonly IObjectProvider<IType> InfrastructureLayer = 
-		Types().That().ResideInAssembly(FindName("HexaContent.Infrastructure"))
+		Types().That().ResideInAssembly(Name("HexaContent.Infrastructure"))
 		.As("Infrastructure Layer");
 
 	private readonly IObjectProvider<Class> Repositories = 
@@ -52,30 +52,25 @@ public sealed class Fundamental
 			.Check(Architecture);
 	}
 
-	[TestMethod]
-	public void CoreLayerShouldNotAccessInfrastructureLayer()
-	{
+    [TestMethod]
+    public void CoreLayerShouldNotAccessInfrastructureLayer() => 
 		Types().That().Are(CoreLayer)
-			.Should().NotDependOnAny(InfrastructureLayer)
-			.Check(Architecture);
-	}
+            .Should().NotDependOnAny(InfrastructureLayer)
+            .Check(Architecture);
 
 
-	[TestMethod]
-	public void RepositoriesShouldEndWithRepository()
-	{
+    [TestMethod]
+    public void RepositoriesShouldEndWithRepository() => 
 		Classes().That().Are(Repositories)
-			.Should().HaveNameEndingWith("Repository")
-			.Check(Architecture);
-	}
+            .Should().HaveNameEndingWith("Repository")
+            .Check(Architecture);
 
-	[TestMethod]
-	public void MessagesShouldEndWithMessage()
-	{
+    [TestMethod]
+    public void MessagesShouldEndWithMessage() =>
 		Classes().That().Are(Messages)
-			.Should().HaveNameEndingWith("Message")
-			.Check(Architecture);
-	}
+            .Should().HaveNameEndingWith("Message")
+            .Check(Architecture);
 
-	private static string FindName(string name) => Architecture.Assemblies.Where(a => a.Name.StartsWith($"{name},")).First().Name;
+    private static string Name(string name) => 
+		Architecture.Assemblies.Where(a => a.Name.StartsWith($"{name},")).First().Name;
 }
