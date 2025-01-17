@@ -1,14 +1,12 @@
-﻿namespace HexaContent.Core.Model;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HexaContent.Core.Model;
 
 /// <summary>
 /// Represents an article in the system.
 /// </summary>
-public sealed class Article
+public sealed class Article : EntityBase
 {
-	/// <summary>
-	/// Gets or sets the unique identifier for the article.
-	/// </summary>
-	public int Id { get; set; }
 
 	/// <summary>
 	/// Gets or sets the title of the article.
@@ -29,6 +27,11 @@ public sealed class Article
 	/// Gets or sets the date and time when the article was last updated.
 	/// </summary>
 	public DateTime UpdatedAt { get; set; }
+
+	/// <summary>
+	/// Gets or sets the author id.
+	/// </summary>
+	public int AuthorId { get; set; }
 
 	/// <summary>
 	/// Gets or sets the author of the article.

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HexaContent.Core.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace HexaContent.Infrastructure.Database;
 
@@ -10,12 +11,12 @@ public class DatabaseContext : DbContext
     /// <summary>
     /// Gets or sets the DbSet for articles.
     /// </summary>
-    public DbSet<ArticleEntity> Articles { get; set; }
+    public DbSet<Article> Articles { get; set; }
 
     /// <summary>
     /// Gets or sets the DbSet for authors.
     /// </summary>
-    public DbSet<AuthorEntity> Authors { get; set; }
+    public DbSet<Author> Authors { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DatabaseContext"/> class.
@@ -24,4 +25,14 @@ public class DatabaseContext : DbContext
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
     {
     }
+
+	protected override void OnModelCreating(ModelBuilder modelBuilder)
+	{
+        modelBuilder.Entity<Article>()
+            .Property(f => f.Id)
+            .ValueGeneratedOnAdd();
+		modelBuilder.Entity<Author>()
+			.Property(f => f.Id)
+			.ValueGeneratedOnAdd();
+	}
 }

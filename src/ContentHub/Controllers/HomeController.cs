@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using HexaContent.Core.Repositories;
 using HexaContent.ContentHub.Models;
 using HexaContent.Core.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace HexaContent.ContentHub.Controllers;
 
@@ -16,7 +17,7 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var articles = await _articlesRepository.GetAllAsync();
+        var articles = await _articlesRepository.GetAll().ToListAsync();
         var model = new HomeModel
         {
             Articles = articles.ToList()
@@ -61,7 +62,8 @@ public class HomeController : Controller
         existingArticle.Author = new Author { Id = article.AuthorId };
 		existingArticle.UpdatedAt = DateTime.UtcNow;
 
-        await _articlesRepository.UpdateAsync(existingArticle);
+        _articlesRepository.Update(existingArticle);
+        await _articlesRepository.SaveChangesAsync();
 
         return RedirectToAction("Index");
     }

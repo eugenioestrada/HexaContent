@@ -7,6 +7,7 @@ public class ContentService(IArticlesRepository articlesRepository)
 {
 	public async Task CreateArticle(Article article)
 	{
-		await articlesRepository.AddAsync(article);
+		articlesRepository.Add(article);
+		await articlesRepository.SaveChangesAsync();
 	}
 }

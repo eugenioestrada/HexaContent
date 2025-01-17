@@ -1,15 +1,12 @@
-﻿namespace HexaContent.Core.Model;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HexaContent.Core.Model;
 
 /// <summary>
 /// Represents an author in the system.
 /// </summary>
-public sealed class Author
+public sealed class Author : EntityBase
 {
-	/// <summary>
-	/// Gets or sets the unique identifier for the author.
-	/// </summary>
-	public int Id { get; set; }
-
 	/// <summary>
 	/// Gets or sets the name of the author.
 	/// </summary>

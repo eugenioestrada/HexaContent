@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using HexaContent.Core.Repositories;
 using HexaContent.Infrastructure.Repositories;
-using HexaContent.Infrastructure.Mapping;
 using HexaContent.Core.Model;
 using HexaContent.Core.Messaging;
 using HexaContent.Infrastructure.Messaging;
@@ -17,15 +16,6 @@ namespace HexaContent.Infrastructure.Extension;
 /// </summary>
 public static class ApplicationBuilderExtensions
 {
-    /// <summary>
-    /// Adds AutoMapper to the application builder.
-    /// </summary>
-    /// <param name="builder">The application builder.</param>
-    public static void AddAutoMapper(this IHostApplicationBuilder builder)
-    {
-        builder.Services.AddAutoMapper(typeof(MappingProfile));
-    }
-
     /// <summary>
     /// Adds repositories to the application builder.
     /// </summary>
@@ -85,7 +75,6 @@ public static class ApplicationBuilderExtensions
             {
                 new Author
                 {
-                    Id = 1,
                     Name = "Test Author",
                     Email = "author@example.com",
                     Bio = "Bio",
@@ -94,7 +83,6 @@ public static class ApplicationBuilderExtensions
                 },
                 new Author
                 {
-                    Id = 2,
                     Name = "Jane Doe",
                     Email = "jane.doe@example.com",
                     Bio = "Jane's bio",
@@ -103,7 +91,6 @@ public static class ApplicationBuilderExtensions
                 },
                 new Author
                 {
-                    Id = 3,
                     Name = "John Smith",
                     Email = "john.smith@example.com",
                     Bio = "John's bio",
@@ -114,14 +101,15 @@ public static class ApplicationBuilderExtensions
 
             foreach (var author in authors)
             {
-                await authorsRepository.AddAsync(author);
+                authorsRepository.Add(author);
             }
+
+            await authorsRepository.SaveChangesAsync();
 
             var articles = new List<Article>
             {
                 new Article
                 {
-                    Id = 1,
                     Title = "Test Article",
                     Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                     CreatedAt = DateTime.UtcNow,
@@ -130,7 +118,6 @@ public static class ApplicationBuilderExtensions
                 },
                 new Article
                 {
-                    Id = 2,
                     Title = "Another Article",
                     Content = "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                     CreatedAt = DateTime.UtcNow,
@@ -139,7 +126,6 @@ public static class ApplicationBuilderExtensions
                 },
                 new Article
                 {
-                    Id = 3,
                     Title = "Yet Another Article",
                     Content = "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
                     CreatedAt = DateTime.UtcNow,
@@ -150,8 +136,10 @@ public static class ApplicationBuilderExtensions
 
             foreach (var article in articles)
             {
-                await articlesRepository.AddAsync(article);
+                articlesRepository.Add(article);
             }
-        }
+
+            await articlesRepository.SaveChangesAsync();
+		}
     }
 }
