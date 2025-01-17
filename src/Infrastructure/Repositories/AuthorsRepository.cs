@@ -7,7 +7,7 @@ namespace HexaContent.Infrastructure.Repositories;
 /// <summary>
 /// Repository for managing authors in the database.
 /// </summary>
-public class AuthorsRepository : RepositoryBase<Author>, IAuthorsRepository
+public class AuthorsRepository : RepositoryBase<Author, int>, IAuthorsRepository
 {
 	public AuthorsRepository(DatabaseContext _context) : base(_context, _context.Authors)
 	{

@@ -38,7 +38,7 @@ public class HomeController : Controller
 			Content = article.Content,
 			Title = article.Title,
 			AuthorId = article.Author.Id,
-			CreatedAt = article.CreatedAt,
+			CreatedAt = article.PublishedAt,
 			UpdatedAt = article.UpdatedAt
 		});
     }

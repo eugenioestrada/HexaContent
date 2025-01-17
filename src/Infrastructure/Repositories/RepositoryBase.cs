@@ -5,12 +5,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HexaContent.Infrastructure.Repositories;
 
-public abstract class RepositoryBase<TEntity>(DatabaseContext _context, DbSet<TEntity> _dbSet) : IRepository<TEntity> where TEntity : EntityBase 
+public abstract class RepositoryBase<TEntity, Tkey>(DatabaseContext _context, DbSet<TEntity> _dbSet) : IRepository<TEntity, Tkey>
+	where TEntity : EntityBase<Tkey>
+	where Tkey : struct
 {
 	protected DatabaseContext Context { get; } = _context;
 	protected DbSet<TEntity> DbSet { get; } = _dbSet;
 
-	public ValueTask<TEntity?> FindAsync(int id) => DbSet.FindAsync(id);
+	public ValueTask<TEntity?> FindAsync(Tkey id) => DbSet.FindAsync(id);
 
 	public IQueryable<TEntity> GetAll() => DbSet.AsQueryable();
 
@@ -21,4 +23,6 @@ public abstract class RepositoryBase<TEntity>(DatabaseContext _context, DbSet<TE
 	public void Update(TEntity entity) => DbSet.Update(entity);
 
 	public Task SaveChangesAsync() => Context.SaveChangesAsync();
+
+	public void Dispose() => this.Context.Dispose();
 }

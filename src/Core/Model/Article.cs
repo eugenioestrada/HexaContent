@@ -5,7 +5,7 @@ namespace HexaContent.Core.Model;
 /// <summary>
 /// Represents an article in the system.
 /// </summary>
-public sealed class Article : EntityBase
+public sealed class Article : EntityBase<int>
 {
 
 	/// <summary>
@@ -19,9 +19,9 @@ public sealed class Article : EntityBase
 	public string Content { get; set; }
 
 	/// <summary>
-	/// Gets or sets the date and time when the article was created.
+	/// Gets or sets the date and time when the article was published.
 	/// </summary>
-	public DateTime CreatedAt { get; set; }
+	public DateTime? PublishedAt { get; set; }
 
 	/// <summary>
 	/// Gets or sets the date and time when the article was last updated.
@@ -33,8 +33,13 @@ public sealed class Article : EntityBase
 	/// </summary>
 	public int AuthorId { get; set; }
 
+	public ArticleStatus Status { get; set; } = ArticleStatus.Draft;
+
 	/// <summary>
 	/// Gets or sets the author of the article.
 	/// </summary>
 	public Author? Author { get; set; }
+
+	public List<ArticleMeta>? Meta { get; set; }
+	public List<ArticleSection>? Sections { get; set; }
 }

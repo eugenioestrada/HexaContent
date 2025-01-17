@@ -5,7 +5,7 @@ namespace HexaContent.Core.Model;
 /// <summary>
 /// Represents an author in the system.
 /// </summary>
-public sealed class Author : EntityBase
+public sealed class Author : EntityBase<int>
 {
 	/// <summary>
 	/// Gets or sets the name of the author.
@@ -35,5 +35,6 @@ public sealed class Author : EntityBase
 	/// <summary>
 	/// Gets the list of articles written by the author.
 	/// </summary>
-	public List<Article>? Articles { get; }
+	public List<Article>? Articles { get; set; }
+	public List<AuthorMeta>? Meta { get; set; }
 }

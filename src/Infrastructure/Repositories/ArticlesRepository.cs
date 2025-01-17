@@ -7,7 +7,7 @@ namespace HexaContent.Infrastructure.Repositories;
 /// <summary>
 /// Repository for managing articles in the database.
 /// </summary>
-public class ArticlesRepository : RepositoryBase<Article>, IArticlesRepository
+public class ArticlesRepository : RepositoryBase<Article, int>, IArticlesRepository
 {
 	public ArticlesRepository(DatabaseContext _context) : base(_context, _context.Articles)
 	{

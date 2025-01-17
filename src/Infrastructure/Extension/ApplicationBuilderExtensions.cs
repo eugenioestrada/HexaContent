@@ -112,7 +112,7 @@ public static class ApplicationBuilderExtensions
                 {
                     Title = "Test Article",
                     Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                    CreatedAt = DateTime.UtcNow,
+                    PublishedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow,
                     Author = authors[0]
                 },
@@ -120,7 +120,7 @@ public static class ApplicationBuilderExtensions
                 {
                     Title = "Another Article",
                     Content = "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                    CreatedAt = DateTime.UtcNow,
+					PublishedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow,
                     Author = authors[1]
                 },
@@ -128,7 +128,7 @@ public static class ApplicationBuilderExtensions
                 {
                     Title = "Yet Another Article",
                     Content = "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-                    CreatedAt = DateTime.UtcNow,
+					PublishedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow,
                     Author = authors[2]
                 }

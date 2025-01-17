@@ -1,8 +1,10 @@
 ﻿namespace HexaContent.Core.Repositories.Generic;
 
-public interface IRepository<TEntity> : IRepository where TEntity : EntityBase
+public interface IRepository<TEntity, TKey> : IRepository, IDisposable
+	where TEntity : EntityBase<TKey>
+	where TKey : struct
 {
-	ValueTask<TEntity?> FindAsync(int id);
+	ValueTask<TEntity?> FindAsync(TKey id);
 	void Add(TEntity model);
 	void Delete(TEntity entity);
 	void Update(TEntity entity);
