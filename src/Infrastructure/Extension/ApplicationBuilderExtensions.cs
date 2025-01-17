@@ -24,6 +24,11 @@ public static class ApplicationBuilderExtensions
     {
         builder.Services.AddScoped<IArticlesRepository, ArticlesRepository>();
         builder.Services.AddScoped<IAuthorsRepository, AuthorsRepository>();
+        builder.Services.AddScoped<IArticleMetaRepository, ArticleMetaRepository>();
+        builder.Services.AddScoped<IArticleSectionsRepository, ArticleSectionsRepository>();
+        builder.Services.AddScoped<ISectionsRepository, SectionsRepository>();
+        builder.Services.AddScoped<ISectionMetaRepository, SectionMetaRepository>();
+        builder.Services.AddScoped<IAuthorMetaRepository, AuthorMetaRepository>();
     }
 
     public static void AddMessageBus(this IHostApplicationBuilder builder)
