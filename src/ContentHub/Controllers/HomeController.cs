@@ -17,7 +17,7 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var articles = await _articlesRepository.GetAll().ToListAsync();
+        var articles = await _articlesRepository.GetAll().Include(a => a.Author).ToListAsync();
         var model = new HomeModel
         {
             Articles = articles.ToList()
@@ -27,7 +27,7 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Edit(int id)
     {
-        var article = await _articlesRepository.FindAsync(id);
+        var article = await _articlesRepository.GetAll().Include(a => a.Author).Where(a => a.Id == id).FirstOrDefaultAsync();
 
         if (article == null)
         {
@@ -59,7 +59,7 @@ public class HomeController : Controller
 
         existingArticle.Title = article.Title;
         existingArticle.Content = article.Content;
-        existingArticle.Author = new Author { Id = article.AuthorId };
+        existingArticle.AuthorId = article.AuthorId;
 		existingArticle.UpdatedAt = DateTime.UtcNow;
 
         _articlesRepository.Update(existingArticle);
