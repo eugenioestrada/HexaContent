@@ -25,12 +25,12 @@ public sealed class Fundamental
 		.As("Infrastructure Layer");
 
 	private readonly IObjectProvider<Class> Repositories = 
-		Classes().That().ImplementInterface(typeof(IRepository))
+		Classes().That().AreNotAbstract().And().ImplementInterface(typeof(IRepository))
 		.As("Repositories");
 
-	private readonly IObjectProvider<Interface> RepositoriesPorts = 
+	private readonly IObjectProvider<Interface> RepositoriesInterfaces = 
 		Interfaces().That().ImplementInterface(typeof(IRepository))
-		.As("Repositories Ports");
+		.As("Repositories Interfaces");
 
 	private readonly IObjectProvider<Class> Messages =
 		Classes().That().ImplementInterface(typeof(IMessage))
@@ -47,7 +47,7 @@ public sealed class Fundamental
 			.Should().Be(CoreLayer)
 			.Check(Architecture);
 
-		Interfaces().That().Are(RepositoriesPorts)
+		Interfaces().That().Are(RepositoriesInterfaces)
 			.Should().Be(CoreLayer)
 			.Check(Architecture);
 	}
