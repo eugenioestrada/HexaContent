@@ -1,6 +1,8 @@
 @model HexaContent.ContentHub.Models.EditArticleModel
 
-<h1>Edit Article</h1>
+@{
+    ViewData["Title"] = "Edit Article";
+}
 
 <form asp-action="Update"  method="post">
     <input type="hidden" asp-for="Id" />

@@ -1,24 +1,47 @@
 @model HexaContent.ContentHub.Models.HomeModel
-
-<h1>
-    Welcome to Content Hub
-</h1>
+@{
+    ViewData["Title"] = "Articles";
+}
 
 @if (Model.Articles != null && Model.Articles.Any())
 {
-    <ul>
+    <div class="items">
         @foreach (var article in Model.Articles)
         {
-            <li>
-                <h2>@article.Title</h2>
-                <p>@article.Content</p>
-                <p><em>By @article.Author.Name on @article.UpdatedAt.ToString("MMMM dd, yyyy")</em></p>
-                <a asp-action="Edit" asp-route-id="@article.Id">Edit</a>
-            </li>
+            <div class="item">
+                <div class="item-info">
+                    <h2 class="item-header">@article.Title</h2>
+                    <div class="item-byline">By @article.Author.Name en <em>Section</em> - @article.UpdatedAt.ToString("dd/MM/yyyy")</div>
+                    <div class="item-status">@article.Status.ToView()</div>
+                </div>
+
+                <a class="item-edit material-symbols-outlined" asp-action="Edit" asp-route-id="@article.Id">edit</a>
+            </div>
         }
-    </ul>
+    </div>
 }
 else
 {
     <p>No articles available.</p>
+}
+
+@section Actions
+{
+    <select>
+        <option selected>Todos los artículos</option>
+        <option>Borradores</option>
+        <option>Publicados</option>
+        <option>Eliminados</option>
+        <option>Programados</option>
+    </select>
+
+    <select>
+        <option selected>Todos los autores</option>
+    </select>
+
+    <select>
+        <option selected>Todos las secciones</option>
+    </select>
+
+    <button>Nuevo artículo</button>
 }
