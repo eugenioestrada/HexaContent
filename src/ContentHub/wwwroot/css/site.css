@@ -17,6 +17,8 @@ header {
     left: 0;
     right: 0;
     justify-content: space-between;
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 4px 8px, rgba(0, 0, 0, 0.06) 0px 0px 2px, rgba(0, 0, 0, 0.04) 0px 0px 1px;
+    background: #fff
 }
 
     header .header-name {
@@ -109,3 +111,31 @@ main .items {
             right: 0;
             bottom: 0;
         }
+
+    main .editor .edit-title {
+        display: block;
+        font-size: 22px;
+        line-height: 32px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+        main .editor .edit-title br {
+            display: none;
+        }
+
+        aside .editor-meta {
+            display: flex;
+            flex-direction: column;
+            margin: 10px;
+        }
+
+            aside .editor-meta div, aside .editor-meta select {
+                margin-bottom: 10px;
+            }
+
+    main .editor .edit-content {
+        display: block;
+        font-size: 19px;
+        line-height: 32px
+    }

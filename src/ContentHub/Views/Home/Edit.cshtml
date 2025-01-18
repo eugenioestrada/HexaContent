@@ -8,20 +8,44 @@
     <form asp-action="Update" method="post">
         <input type="hidden" asp-for="Id" />
         <input type="hidden" asp-for="Title" />
+        <input type="hidden" asp-for="Content" />
 
         <div>
-            <span contenteditable="true" data-input-sync="Title">
+            <span class="edit-title" contenteditable="true" data-input-sync="Title">
                 @Model.Title
             </span>
         </div>
 
         <div>
-            <textarea asp-for="Content"></textarea>
+            <span class="edit-content" contenteditable="true" data-input-sync="Content">
+                @Model.Content
+            </span>
         </div>
 
         <div>
             <input type="hidden" asp-for="AuthorId" />
         </div>
+    </form>
+</div>
+
+@section Actions
+{
+    <button onclick="submit()">Save</button>
+}
+
+@section Aside {
+    <div class="editor-meta">
+        <select>
+            <option selected>Author 1</option>
+            <option>Author 2</option>
+            <option>Author 3</option>
+        </select>
+
+        <select>
+            <option>Section 1</option>
+            <option selected>Section 2</option>
+            <option>Section 3</option>
+        </select>
 
         <div>
             <label asp-for="CreatedAt"></label>
@@ -32,45 +56,51 @@
             <label asp-for="UpdatedAt"></label>
             <input asp-for="UpdatedAt" type="datetime" readonly />
         </div>
+    </div>
+}
 
-        <button type="submit">Save Changes</button>
+<script>
+    const config = {
+        subtree: true,
+        attributes: true,
+        // childList: true,
+        characterData: true,
+        characterDataOldValue: true
+    };
 
-        <script>
-            // Options for the observer (which mutations to observe)
-            const config = {
-                subtree: true,
-                attributes: true,
-                // childList: true,
-                characterData: true,
-                characterDataOldValue: true
-            };
-
-            // Callback function to execute when mutations are observed
-            const callback = (mutationList, observer) => {
-              for (const mutation of mutationList) {
-                console.log(mutation)
+    // Callback function to execute when mutations are observed
+    const callback = (mutationList, observer) => {
+        for (const mutation of mutationList) {
+            console.log(mutation)
+            if (mutation.target.parentNode != null) {
                 let node = mutation.target.parentNode;
                 if (typeof node.dataset.inputSync !== 'undefined') {
                     let selector = `input[type='hidden'][name='${node.dataset.inputSync}']`;
                     let hiddenInput = document.querySelector(selector);
                     hiddenInput.value = node.innerText;
                 }
-              }
-            };
+            }
+        }
+    };
 
-            // Create an observer instance linked to the callback function
-            const observer = new MutationObserver(callback);
+    // Create an observer instance linked to the callback function
+    const observer = new MutationObserver(callback);
 
-            const nodes = document.querySelectorAll("main .editor *[contenteditable='true'][data-input-sync]");
-            nodes.forEach(function(node) {
-                observer.observe(node, config)
-                node.addEventListener("paste", (event) => {
-                    // todo: prevent ilegal
-                });
-                node.addEventListener("keypress", (event) => {
-                    return event.which != 13;
-                });
-            });
-        </script>
-    </form>
-</div>
+    const nodes = document.querySelectorAll("main .editor *[contenteditable='true'][data-input-sync]");
+    nodes.forEach(function(node) {
+        observer.observe(node, config)
+        node.addEventListener("paste", (event) => {
+            var content = event.clipboardData.getData('text/plain');
+            document.execCommand('insertText', false, content.trim());
+            event.preventDefault();
+            return false;
+        });
+        node.addEventListener("keypress", (event) => {
+            return event.which != 13;
+        });
+    });
+
+    function submit() {
+        document.querySelector(".editor form").submit();
+    }
+</script>

@@ -23,6 +23,8 @@
 
     <aside>
         <span class="header-name">HexaContent</span>
+
+        @RenderSection("Aside", required: false)
     </aside>
 
     @await RenderSectionAsync("Scripts", required: false)
