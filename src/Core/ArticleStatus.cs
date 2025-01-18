@@ -1,8 +1,9 @@
-﻿namespace HexaContent.Core.Model;
+﻿namespace HexaContent.Core;
 
 public enum ArticleStatus
 {
 	Draft,
+	Scheduled,
 	Published,
 	Archived
 }

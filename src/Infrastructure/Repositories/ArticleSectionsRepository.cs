@@ -9,7 +9,7 @@ namespace HexaContent.Infrastructure.Repositories;
 /// </summary>
 public class ArticleSectionsRepository : RepositoryBase<ArticleSection, long>, IArticleSectionsRepository
 {
-    public ArticleSectionsRepository(DatabaseContext _context) : base(_context, _context.Set<ArticleSection>())
+    public ArticleSectionsRepository(DatabaseContext _context) : base(_context, _context.ArticleSections)
     {
     }
 }

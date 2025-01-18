@@ -1,8 +1,11 @@
-﻿namespace HexaContent.Core.Model;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace HexaContent.Core.Model;
 
 /// <summary>
 /// Represents an article in the system.
 /// </summary>
+[Table("article")]
 public sealed class Article : EntityBase<long>
 {
 

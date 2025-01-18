@@ -5,7 +5,7 @@ public abstract class MetaEntityBase<TKey, TOBject, TObjectKey> : EntityBase<TKe
 	where TObjectKey : struct
 	where TOBject : EntityBase<TObjectKey>
 {
-	public required int ObjectId { get; set; }
+	public required TObjectKey ObjectId { get; set; }
 	public required string Key { get; set; }
 	public required string Value { get; set; }
 

@@ -9,7 +9,7 @@ namespace HexaContent.Infrastructure.Repositories;
 /// </summary>
 public class AuthorMetaRepository : RepositoryBase<AuthorMeta, int>, IAuthorMetaRepository
 {
-    public AuthorMetaRepository(DatabaseContext _context) : base(_context, _context.Set<AuthorMeta>())
+    public AuthorMetaRepository(DatabaseContext _context) : base(_context, _context.AuthorMeta)
     {
     }
 }

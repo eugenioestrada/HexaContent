@@ -1,5 +1,8 @@
-﻿namespace HexaContent.Core.Model;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
+namespace HexaContent.Core.Model;
+
+[Table("section")]
 public sealed class Section : EntityBase<int>
 {
 	public string Name { get; set; }

@@ -9,7 +9,7 @@ namespace HexaContent.Infrastructure.Repositories;
 /// </summary>
 public class SectionsRepository : RepositoryBase<Section, int>, ISectionsRepository
 {
-    public SectionsRepository(DatabaseContext _context) : base(_context, _context.Set<Section>())
+    public SectionsRepository(DatabaseContext _context) : base(_context, _context.Sections)
     {
     }
 }

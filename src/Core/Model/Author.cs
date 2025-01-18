@@ -1,8 +1,11 @@
-﻿namespace HexaContent.Core.Model;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace HexaContent.Core.Model;
 
 /// <summary>
 /// Represents an author in the system.
 /// </summary>
+[Table("author")]
 public sealed class Author : EntityBase<int>
 {
 	/// <summary>

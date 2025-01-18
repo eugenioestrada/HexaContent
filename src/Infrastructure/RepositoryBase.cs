@@ -3,7 +3,7 @@ using HexaContent.Core.Repositories.Generic;
 using HexaContent.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace HexaContent.Infrastructure.Repositories;
+namespace HexaContent.Infrastructure;
 
 public abstract class RepositoryBase<TEntity, Tkey>(DatabaseContext _context, DbSet<TEntity> _dbSet) : IRepository<TEntity, Tkey>
 	where TEntity : EntityBase<Tkey>
@@ -24,5 +24,5 @@ public abstract class RepositoryBase<TEntity, Tkey>(DatabaseContext _context, Db
 
 	public Task SaveChangesAsync() => Context.SaveChangesAsync();
 
-	public void Dispose() => this.Context.Dispose();
+	public void Dispose() => Context.Dispose();
 }

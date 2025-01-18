@@ -9,7 +9,7 @@ namespace HexaContent.Infrastructure.Repositories;
 /// </summary>
 public class SectionMetaRepository : RepositoryBase<SectionMeta, int>, ISectionMetaRepository
 {
-    public SectionMetaRepository(DatabaseContext _context) : base(_context, _context.Set<SectionMeta>())
+    public SectionMetaRepository(DatabaseContext _context) : base(_context, _context.SectionMeta)
     {
     }
 }

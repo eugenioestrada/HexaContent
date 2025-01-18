@@ -1,5 +1,8 @@
-﻿namespace HexaContent.Core.Model;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
+namespace HexaContent.Core.Model;
+
+[Table("article_section")]
 public sealed class ArticleSection : EntityBase<long>
 {
 	public long ArticleId { get; set; }

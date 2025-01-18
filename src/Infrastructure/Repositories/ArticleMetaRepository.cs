@@ -9,7 +9,7 @@ namespace HexaContent.Infrastructure.Repositories;
 /// </summary>
 public class ArticleMetaRepository : RepositoryBase<ArticleMeta, long>, IArticleMetaRepository
 {
-    public ArticleMetaRepository(DatabaseContext _context) : base(_context, _context.Set<ArticleMeta>())
+    public ArticleMetaRepository(DatabaseContext _context) : base(_context, _context.ArticleMeta)
     {
     }
 }
