@@ -4,32 +4,65 @@
     ViewData["Title"] = "Edit Article";
 }
 
-<form asp-action="Update"  method="post">
-    <input type="hidden" asp-for="Id" />
+<div class="editor">
+    <form asp-action="Update" method="post">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="Title" />
 
-    <div>
-        <label asp-for="Title"></label>
-        <input asp-for="Title" />
-    </div>
-    
-    <div>
-        <label asp-for="Content"></label>
-        <textarea asp-for="Content"></textarea>
-    </div>
+        <div>
+            <span contenteditable="true" data-input-sync="Title">
+                @Model.Title
+            </span>
+        </div>
 
-    <div>
-        <input type="hidden" asp-for="AuthorId" />
-    </div>
+        <div>
+            <textarea asp-for="Content"></textarea>
+        </div>
 
-    <div>
-        <label asp-for="CreatedAt"></label>
-        <input asp-for="CreatedAt" type="datetime" readonly />
-    </div>
+        <div>
+            <input type="hidden" asp-for="AuthorId" />
+        </div>
 
-    <div>
-        <label asp-for="UpdatedAt"></label>
-        <input asp-for="UpdatedAt" type="datetime" readonly />
-    </div>
-    
-    <button type="submit">Save Changes</button>
-</form>
+        <div>
+            <label asp-for="CreatedAt"></label>
+            <input asp-for="CreatedAt" type="datetime" readonly />
+        </div>
+
+        <div>
+            <label asp-for="UpdatedAt"></label>
+            <input asp-for="UpdatedAt" type="datetime" readonly />
+        </div>
+
+        <button type="submit">Save Changes</button>
+
+        <script>
+            // Options for the observer (which mutations to observe)
+            const config = {
+                subtree: true,
+                attributes: true,
+                childList: true,
+                characterData: true,
+                characterDataOldValue: true
+            };
+
+            // Callback function to execute when mutations are observed
+            const callback = (mutationList, observer) => {
+              for (const mutation of mutationList) {
+                console.log(mutation)
+                let node = mutation.target.parentNode;
+                let selector = `input[type='hidden'][name='${node.dataset.inputSync}']`;
+                let hiddenInput = document.querySelector(selector);
+                hiddenInput.value = node.innerText;
+              }
+            };
+
+            // Create an observer instance linked to the callback function
+            const observer = new MutationObserver(callback);
+
+            const nodes = document.querySelectorAll("main .editor *[data-input-sync]");
+            nodes.forEach(function(node) {
+                observer.observe(node, config)
+            });
+        </script>
+    </form>
+</div>
