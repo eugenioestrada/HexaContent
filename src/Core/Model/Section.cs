@@ -1,6 +1,6 @@
 ﻿namespace HexaContent.Core.Model;
 
-public class Section : EntityBase<int>
+public sealed class Section : EntityBase<int>
 {
 	public string Name { get; set; }
 	public string Description { get; set; }

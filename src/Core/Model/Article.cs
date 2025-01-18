@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace HexaContent.Core.Model;
+﻿namespace HexaContent.Core.Model;
 
 /// <summary>
 /// Represents an article in the system.

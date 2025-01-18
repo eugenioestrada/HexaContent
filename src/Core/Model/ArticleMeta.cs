@@ -1,6 +1,6 @@
 ﻿namespace HexaContent.Core.Model;
 
-public class ArticleMeta : EntityBase<long>
+public sealed class ArticleMeta : EntityBase<long>
 {
 	public int ArticleId { get; set; }
 	public string Key { get; set; }

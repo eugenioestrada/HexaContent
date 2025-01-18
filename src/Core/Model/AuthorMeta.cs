@@ -1,6 +1,6 @@
 ﻿namespace HexaContent.Core.Model;
 
-public class AuthorMeta : EntityBase<int>
+public sealed class AuthorMeta : EntityBase<int>
 {
 	public int AuthorId { get; set; }
 	public string Key { get; set; }
