@@ -6,6 +6,6 @@ namespace HexaContent.Core.Repositories;
 /// <summary>
 /// Interface for managing articles in the repository.
 /// </summary>
-public interface IArticlesRepository : IRepository<Article, int>
+public interface IArticlesRepository : IRepository<Article, long>
 {
 }

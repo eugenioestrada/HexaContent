@@ -3,18 +3,18 @@
 /// <summary>
 /// Represents an article in the system.
 /// </summary>
-public sealed class Article : EntityBase<int>
+public sealed class Article : EntityBase<long>
 {
 
 	/// <summary>
 	/// Gets or sets the title of the article.
 	/// </summary>
-	public string Title { get; set; }
+	public string Title { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Gets or sets the content of the article.
 	/// </summary>
-	public string Content { get; set; }
+	public string Content { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Gets or sets the date and time when the article was published.

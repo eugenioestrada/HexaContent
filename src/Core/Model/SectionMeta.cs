@@ -1,10 +1,5 @@
 ﻿namespace HexaContent.Core.Model;
 
-public sealed class SectionMeta : EntityBase<int>
+public sealed class SectionMeta : MetaEntityBase<int, Section, int>
 {
-	public int SectionId { get; set; }
-	public string Key { get; set; }
-	public string Value { get; set; }
-
-	public Section? Section { get; set; }
 }
