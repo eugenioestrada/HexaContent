@@ -40,7 +40,7 @@
             const config = {
                 subtree: true,
                 attributes: true,
-                childList: true,
+                // childList: true,
                 characterData: true,
                 characterDataOldValue: true
             };
@@ -50,18 +50,26 @@
               for (const mutation of mutationList) {
                 console.log(mutation)
                 let node = mutation.target.parentNode;
-                let selector = `input[type='hidden'][name='${node.dataset.inputSync}']`;
-                let hiddenInput = document.querySelector(selector);
-                hiddenInput.value = node.innerText;
+                if (typeof node.dataset.inputSync !== 'undefined') {
+                    let selector = `input[type='hidden'][name='${node.dataset.inputSync}']`;
+                    let hiddenInput = document.querySelector(selector);
+                    hiddenInput.value = node.innerText;
+                }
               }
             };
 
             // Create an observer instance linked to the callback function
             const observer = new MutationObserver(callback);
 
-            const nodes = document.querySelectorAll("main .editor *[data-input-sync]");
+            const nodes = document.querySelectorAll("main .editor *[contenteditable='true'][data-input-sync]");
             nodes.forEach(function(node) {
                 observer.observe(node, config)
+                node.addEventListener("paste", (event) => {
+                    // todo: prevent ilegal
+                });
+                node.addEventListener("keypress", (event) => {
+                    return event.which != 13;
+                });
             });
         </script>
     </form>
