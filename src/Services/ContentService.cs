@@ -14,35 +14,35 @@ public class ContentService : IContentService
 		_articlesRepository = articlesRepository;
     }
 
-    public async Task<Result> CreateArticle(Article article)
+    public async Task<Result<Article>> CreateArticle(Article article)
     {
         try
         {
             _articlesRepository.Add(article);
             await _articlesRepository.SaveChangesAsync();
-            return Result.Success();
+            return Result<Article>.Success(article);
         }
         catch (Exception ex)
         {
-            return Result.Failure(ex.Message);
+            return Result<Article>.Failure(ex.Message);
         }
     }
 
-    public async Task<Result> UpdateArticle(Article article)
+    public async Task<Result<bool>> UpdateArticle(Article article)
     {
         try
         {
             _articlesRepository.Update(article);
             await _articlesRepository.SaveChangesAsync();
-            return Result.Success();
+            return Result<bool>.Success(true);
         }
         catch (Exception ex)
         {
-            return Result.Failure(ex.Message);
+            return Result<bool>.Failure(ex.Message);
         }
     }
 
-    public async Task<Result> ArchiveArticle(long articleId)
+    public async Task<Result<bool>> ArchiveArticle(long articleId)
     {
         try
         {
@@ -51,17 +51,17 @@ public class ContentService : IContentService
             {
                 article.Status = ArticleStatus.Archived;
                 await _articlesRepository.SaveChangesAsync();
-                return Result.Success();
+                return Result<bool>.Success(true);
             }
-            return Result.Failure("Article not found");
+            return Result<bool>.Failure("Article not found");
         }
         catch (Exception ex)
         {
-            return Result.Failure(ex.Message);
+            return Result<bool>.Failure(ex.Message);
         }
     }
 
-    public async Task<Result> PublishArticle(long articleId)
+    public async Task<Result<bool>> PublishArticle(long articleId)
     {
         try
         {
@@ -71,17 +71,17 @@ public class ContentService : IContentService
                 article.Status = ArticleStatus.Published;
                 article.PublishedAt = DateTime.UtcNow;
                 await _articlesRepository.SaveChangesAsync();
-                return Result.Success();
+                return Result<bool>.Success(true);
             }
-            return Result.Failure("Article not found");
+            return Result<bool>.Failure("Article not found");
         }
         catch (Exception ex)
         {
-            return Result.Failure(ex.Message);
+            return Result<bool>.Failure(ex.Message);
         }
     }
 
-    public async Task<Result> ScheduleArticle(long articleId)
+    public async Task<Result<bool>> ScheduleArticle(long articleId)
     {
         try
         {
@@ -90,13 +90,13 @@ public class ContentService : IContentService
             {
                 article.Status = ArticleStatus.Scheduled;
                 await _articlesRepository.SaveChangesAsync();
-                return Result.Success();
+                return Result<bool>.Success(true);
             }
-            return Result.Failure("Article not found");
+            return Result<bool>.Failure("Article not found");
         }
         catch (Exception ex)
         {
-            return Result.Failure(ex.Message);
+            return Result<bool>.Failure(ex.Message);
         }
     }
 }
