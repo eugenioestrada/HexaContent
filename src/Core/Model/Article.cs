@@ -43,4 +43,14 @@ public sealed class Article : EntityBase<long>
 
 	public List<ArticleMeta>? Meta { get; set; }
 	public List<ArticleSection>? Sections { get; set; }
+
+    /// <summary>
+    /// Gets or sets the featured media id.
+    /// </summary>
+    public long? FeaturedMediaId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the featured media.
+    /// </summary>
+    public Media? FeaturedMedia { get; set; }
 }

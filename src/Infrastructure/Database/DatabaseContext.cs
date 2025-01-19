@@ -80,5 +80,11 @@ public class DatabaseContext : DbContext
 			.HasOne(bc => bc.Object)
 			.WithMany(b => b.Meta)
 			.HasForeignKey(bc => bc.ObjectId);
+
+        modelBuilder.Entity<Article>()
+            .HasOne(a => a.FeaturedMedia)
+            .WithMany()
+            .HasForeignKey(a => a.FeaturedMediaId)
+            .OnDelete(DeleteBehavior.SetNull);
 	}
 }
