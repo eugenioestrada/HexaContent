@@ -1,39 +1,40 @@
 using Microsoft.AspNetCore.Mvc;
-using HexaContent.Core.Repositories;
 using HexaContent.ContentHub.Models;
-using HexaContent.Core.Model;
-using Microsoft.EntityFrameworkCore;
+using HexaContent.Core.Services;
 
 namespace HexaContent.ContentHub.Controllers;
 
-public class HomeController : Controller
+public class HomeController([FromServices] IContentService _contentService) : Controller
 {
-    private readonly IArticlesRepository _articlesRepository;
-
-    public HomeController([FromServices] IArticlesRepository articlesRepository)
-    {
-        _articlesRepository = articlesRepository;
-    }
-
     public async Task<IActionResult> Index()
     {
-        var articles = await _articlesRepository.GetAll().Include(a => a.Author).ToListAsync();
-        var model = new HomeModel
+        var result = await _contentService.GetAll();
+
+        if (result.IsSuccess == false)
+		{
+			return BadRequest(result.ErrorMessage);
+		}
+
+		var model = new HomeModel
         {
-            Articles = articles.ToList()
-        };
+            Articles = result.Value.ToList()
+		};
+
         return View(model);
     }
 
     public async Task<IActionResult> Edit(int id)
     {
-        var article = await _articlesRepository.GetAll().Include(a => a.Author).Where(a => a.Id == id).FirstOrDefaultAsync();
+        var result = await _contentService.GetArticle(id);
 
-        if (article == null)
+		if (!result.IsSuccess || result == null)
         {
             return NotFound();
         }
-        return View(new EditArticleModel {
+
+		var article = result.Value;
+
+		return View(new EditArticleModel {
             Id = article.Id,
 			Content = article.Content,
 			Title = article.Title,
@@ -51,19 +52,20 @@ public class HomeController : Controller
             return View("Edit", article);
         }
 
-        var existingArticle = await _articlesRepository.FindAsync(article.Id);
-        if (existingArticle == null)
+        var result = await _contentService.GetArticle(article.Id);
+        
+        if (!result.IsSuccess || result == null)
         {
             return NotFound();
         }
 
-        existingArticle.Title = article.Title;
+        var existingArticle = result.Value;
+		existingArticle.Title = article.Title;
         existingArticle.Content = article.Content;
         existingArticle.AuthorId = article.AuthorId;
 		existingArticle.UpdatedAt = DateTime.UtcNow;
 
-        _articlesRepository.Update(existingArticle);
-        await _articlesRepository.SaveChangesAsync();
+        await _contentService.UpdateArticle(existingArticle);
 
         return RedirectToAction("Index");
     }

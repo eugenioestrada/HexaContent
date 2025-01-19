@@ -5,15 +5,8 @@ using HexaContent.Core.Services;
 
 namespace HexaContent.Services;
 
-public class ContentService : IContentService
+public class ContentService(IArticlesRepository _articlesRepository) : IContentService
 {
-    private readonly IArticlesRepository _articlesRepository;
-
-    public ContentService(IArticlesRepository articlesRepository)
-    {
-		_articlesRepository = articlesRepository;
-    }
-
     public async Task<Result<Article>> CreateArticle(Article article)
     {
         try
@@ -99,4 +92,38 @@ public class ContentService : IContentService
             return Result<bool>.Failure(ex.Message);
         }
     }
+
+	public async Task<Result<Article>> NewArticle()
+	{
+        var article = new Article();
+		_articlesRepository.Add(article);
+		await _articlesRepository.SaveChangesAsync();
+		return Result<Article>.Success(article);
+	}
+
+	public async Task<Result<IEnumerable<Article>>> GetAll()
+	{
+		try
+		{
+			var articles = await _articlesRepository.GetAll(includes: [ a => a.Author ]);
+			return Result<IEnumerable<Article>>.Success(articles);
+		}
+		catch (Exception ex)
+		{
+			return Result<IEnumerable<Article>>.Failure(ex.Message);
+		}
+	}
+
+	public async Task<Result<Article>> GetArticle(long articleId)
+	{
+        try
+        {
+			var article = await _articlesRepository.FindAsync(articleId, includes: [ a => a.Author ]);
+			return Result<Article>.Success(article);
+		}
+		catch (Exception ex)
+		{
+			return Result<Article>.Failure(ex.Message);
+		}
+	}
 }
