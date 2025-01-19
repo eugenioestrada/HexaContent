@@ -42,4 +42,9 @@ public sealed class Media : EntityBase<long>
     /// Gets or sets the type of the media.
     /// </summary>
     public MediaType Type { get; set; }
+
+    /// <summary>
+    /// Gets or sets the meta information for the media.
+    /// </summary>
+    public List<MediaMeta>? Meta { get; set; }
 }
