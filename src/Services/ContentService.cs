@@ -2,7 +2,6 @@
 using HexaContent.Core.Model;
 using HexaContent.Core.Repositories;
 using HexaContent.Core.Services;
-using System.ComponentModel.DataAnnotations;
 
 namespace HexaContent.Services;
 
