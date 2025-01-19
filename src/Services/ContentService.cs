@@ -1,4 +1,5 @@
-﻿using HexaContent.Core.Model;
+﻿using HexaContent.Core;
+using HexaContent.Core.Model;
 using HexaContent.Core.Repositories;
 using HexaContent.Core.Services;
 
