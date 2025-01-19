@@ -29,6 +29,7 @@ public static class ApplicationBuilderExtensions
         builder.Services.AddScoped<ISectionsRepository, SectionsRepository>();
         builder.Services.AddScoped<ISectionMetaRepository, SectionMetaRepository>();
         builder.Services.AddScoped<IAuthorMetaRepository, AuthorMetaRepository>();
+        builder.Services.AddScoped<IMediaRepository, MediaRepository>();
     }
 
     public static void AddMessageBus(this IHostApplicationBuilder builder)
