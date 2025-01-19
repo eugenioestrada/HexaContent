@@ -10,7 +10,7 @@ namespace HexaContent.Core.Services
         Task<Result<bool>> ArchiveArticle(long articleId);
         Task<Result<bool>> PublishArticle(long articleId);
         Task<Result<bool>> ScheduleArticle(long articleId);
-        Task<Result<IEnumerable<Article>>> GetAll();
+        Task<Result<IEnumerable<Article>>> GetAll(int max = 50, int from = 0);
 		Task<Result<Article>> GetArticle(long articleId);
 	}
 }

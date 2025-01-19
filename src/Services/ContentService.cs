@@ -2,6 +2,7 @@
 using HexaContent.Core.Model;
 using HexaContent.Core.Repositories;
 using HexaContent.Core.Services;
+using System.ComponentModel.DataAnnotations;
 
 namespace HexaContent.Services;
 
@@ -101,11 +102,11 @@ public class ContentService(IArticlesRepository _articlesRepository) : IContentS
 		return Result<Article>.Success(article);
 	}
 
-	public async Task<Result<IEnumerable<Article>>> GetAll()
+	public async Task<Result<IEnumerable<Article>>> GetAll(int max = 50, int from = 0)
 	{
 		try
 		{
-			var articles = await _articlesRepository.GetAll(includes: [ a => a.Author ]);
+			var articles = await _articlesRepository.GetAll(includes: [ a => a.Author ], max: max, from: 0);
 			return Result<IEnumerable<Article>>.Success(articles);
 		}
 		catch (Exception ex)
