@@ -9,7 +9,6 @@ internal static class DatabaseContextExtensions
 		where TEntity : EntityBase<TKey>
 		where TKey : struct
 	{
-
 		modelBuilder.Entity<TEntity>().Property(f => f.Id).ValueGeneratedOnAdd();
 	}
 }

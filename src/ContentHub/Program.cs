@@ -1,4 +1,5 @@
 using HexaContent.Infrastructure.Extension;
+using HexaContent.Services.Extension;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,7 @@ builder.AddServiceDefaults();
 builder.AddDbContext(builder.Configuration);
 builder.AddRepositories();
 builder.AddMessageBus();
+builder.AddServices();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

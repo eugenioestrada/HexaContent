@@ -11,7 +11,7 @@ public class ContentService : IContentService
 
     public ContentService(IArticlesRepository articlesRepository)
     {
-        _articlesRepository = articlesRepository;
+		_articlesRepository = articlesRepository;
     }
 
     public async Task<Result> CreateArticle(Article article)

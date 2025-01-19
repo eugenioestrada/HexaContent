@@ -14,7 +14,7 @@ namespace HexaContent.Infrastructure.Extension;
 /// <summary>
 /// Provides extension methods for configuring the application builder.
 /// </summary>
-public static class ApplicationBuilderExtensions
+public static partial class ApplicationBuilderExtensions
 {
     /// <summary>
     /// Adds repositories to the application builder.

@@ -1,19 +1,11 @@
 ﻿using HexaContent.Core.Messaging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Channels;
-using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace HexaContent.Infrastructure.Messaging;
 
-public class MessageBus(IConnection _connection) : IMessageBus
+public partial class MessageBus(IConnection _connection) : IMessageBus
 {
 	IModel _channel = _connection.CreateModel();
 

@@ -10,6 +10,7 @@
     <ProjectReference Include="..\Core\HexaContent.Core.csproj" />
     <ProjectReference Include="..\Infrastructure\HexaContent.Infrastructure.csproj" />
     <ProjectReference Include="..\ServiceDefaults\HexaContent.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\Services\HexaContent.Services.csproj" />
   </ItemGroup>
 
 </Project>
