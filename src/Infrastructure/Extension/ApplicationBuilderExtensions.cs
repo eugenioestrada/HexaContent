@@ -8,6 +8,8 @@ using HexaContent.Infrastructure.Repositories;
 using HexaContent.Core.Model;
 using HexaContent.Core.Messaging;
 using HexaContent.Infrastructure.Messaging;
+using HexaContent.Core;
+using HexaContent.Infrastructure;
 
 namespace HexaContent.Infrastructure.Extension;
 
@@ -30,6 +32,7 @@ public static partial class ApplicationBuilderExtensions
         builder.Services.AddScoped<ISectionMetaRepository, SectionMetaRepository>();
         builder.Services.AddScoped<IAuthorMetaRepository, AuthorMetaRepository>();
         builder.Services.AddScoped<IMediaRepository, MediaRepository>();
+        builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
     }
 
     public static void AddMessageBus(this IHostApplicationBuilder builder)

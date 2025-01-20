@@ -2,7 +2,7 @@
 
 namespace HexaContent.Core;
 
-public interface IUnitOfWork
+public interface IUnitOfWork : IDisposable
 {
 	IArticlesRepository Articles { get; }
 	IArticleMetaRepository ArticleMeta { get; }
@@ -14,4 +14,7 @@ public interface IUnitOfWork
 	IMediaRepository Media { get; }
 	IMediaMetaRepository MediaMeta { get; }
 	ValueTask<int> SaveChangesAsync();
+	void BeginTransaction();
+	void CommitTransaction();
+	void RollbackTransaction();
 }
