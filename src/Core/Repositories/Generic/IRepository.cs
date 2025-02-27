@@ -6,10 +6,10 @@ public interface IRepository<TEntity, TKey> : IRepository, IDisposable
 	where TEntity : EntityBase<TKey>
 	where TKey : struct
 {
-	Task<TEntity?> FindAsync(TKey id, List<Expression<Func<TEntity, object>>>? includes = null);
+	Task<TEntity?> FindAsync(TKey id);
 	void Add(TEntity model);
 	void Delete(TEntity entity);
 	void Update(TEntity entity);
-	Task<List<TEntity>> GetAll(List<Expression<Func<TEntity, object>>>? includes = null, int? max = null, int? from = null);
+	Task<List<TEntity>> Get(Expression<Func<TEntity, bool>>? predicate = null, int? max = null, int? from = null, Expression<Func<TEntity, object>>? orderBy = null, Expression<Func<TEntity, object>>? orderByDesc = null);
 	Task SaveChangesAsync();
 }

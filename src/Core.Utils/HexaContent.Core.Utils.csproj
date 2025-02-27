@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Core.Utils\HexaContent.Core.Utils.csproj" />
-  </ItemGroup>
-
 </Project>

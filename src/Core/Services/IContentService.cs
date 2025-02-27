@@ -4,7 +4,7 @@ namespace HexaContent.Core.Services
 {
     public interface IContentService
     {
-        Task<Result<Article>> NewArticle();
+        Task<Result<Article>> NewArticle(int authorId);
         Task<Result<Article>> CreateArticle(Article model);
         Task<Result<bool>> UpdateArticle(Article model);
         Task<Result<bool>> ArchiveArticle(long articleId);

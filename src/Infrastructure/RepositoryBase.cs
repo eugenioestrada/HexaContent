@@ -1,5 +1,6 @@
 ﻿using HexaContent.Core;
 using HexaContent.Core.Repositories.Generic;
+using HexaContent.Core.Utils;
 using HexaContent.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -13,30 +14,29 @@ public abstract class RepositoryBase<TEntity, TKey>(DatabaseContext _context, Db
 	protected DatabaseContext Context { get; } = _context;
 	protected DbSet<TEntity> DbSet { get; } = _dbSet;
 
-	public async Task<TEntity?> FindAsync(TKey id, List<Expression<Func<TEntity, object>>>? includes = null)
+	public async Task<TEntity?> FindAsync(TKey id)
 	{
-		if (includes != null)
-		{
-			IQueryable<TEntity> query = DbSet;
-
-			foreach (var include in includes)
-			{
-				query = query.Include(include);
-			}
-
-			return await query.Where(t => t.Id.Equals(id)).FirstOrDefaultAsync();
-		}
-
 		return await DbSet.FindAsync(id);
 	}
 
-	public Task<List<TEntity>> GetAll(List<Expression<Func<TEntity, object>>>? includes = null, int? max = null, int? from = null)
+	public Task<List<TEntity>> Get(Expression<Func<TEntity, bool>>? predicate = null, int ? max = null, int? from = null, Expression<Func<TEntity, object>>? orderBy = null, Expression<Func<TEntity, object>>? orderByDesc = null)
 	{
+		Argument.EnsuresNot(orderBy != null && orderByDesc != null, "Cannot specify both an order by and an order by descending");
+
 		IQueryable<TEntity> query = DbSet;
 
-		foreach (var include in includes)
+		if (predicate != null)
 		{
-			query = query.Include(include);
+			query = query.Where(predicate);
+		}
+
+		if (orderBy != null)
+		{
+			query = query.OrderBy(orderBy);
+		}
+		else if (orderByDesc != null)
+		{
+			query = query.OrderByDescending(orderByDesc);
 		}
 
 		if (max.HasValue)

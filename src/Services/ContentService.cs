@@ -5,7 +5,7 @@ using HexaContent.Core.Services;
 
 namespace HexaContent.Services;
 
-public class ContentService(IArticlesRepository _articlesRepository) : IContentService
+public class ContentService(IArticlesRepository _articlesRepository, IAuthorsRepository _authorsRepository) : IContentService
 {
     public async Task<Result<Article>> CreateArticle(Article article)
     {
@@ -93,11 +93,16 @@ public class ContentService(IArticlesRepository _articlesRepository) : IContentS
         }
     }
 
-	public async Task<Result<Article>> NewArticle()
+	public async Task<Result<Article>> NewArticle(int authorId)
 	{
-        var article = new Article();
+        var article = new Article()
+        {
+            AuthorId = authorId,
+        };
+
 		_articlesRepository.Add(article);
 		await _articlesRepository.SaveChangesAsync();
+
 		return Result<Article>.Success(article);
 	}
 
@@ -105,7 +110,10 @@ public class ContentService(IArticlesRepository _articlesRepository) : IContentS
 	{
 		try
 		{
-			var articles = await _articlesRepository.GetAll(includes: [ a => a.Author ], max: max, from: 0);
+			var articles = await _articlesRepository.Get(max: max, from: 0, orderByDesc: a => a.UpdatedAt);
+
+			await AddAuthorsToArticles(articles);
+
 			return Result<IEnumerable<Article>>.Success(articles);
 		}
 		catch (Exception ex)
@@ -118,12 +126,22 @@ public class ContentService(IArticlesRepository _articlesRepository) : IContentS
 	{
         try
         {
-			var article = await _articlesRepository.FindAsync(articleId, includes: [ a => a.Author ]);
+			var article = await _articlesRepository.FindAsync(articleId);
+            article.Author = await _authorsRepository.FindAsync(article.AuthorId);
 			return Result<Article>.Success(article);
 		}
 		catch (Exception ex)
 		{
 			return Result<Article>.Failure(ex.Message);
 		}
+	}
+
+	private async Task AddAuthorsToArticles(List<Article> articles)
+	{
+		var authorsId = articles.Select(a => a.AuthorId).Distinct().ToArray();
+		/*foreach (var article in articles)
+		{
+			article.Author = authors.FirstOrDefault(a => a.Id == article.AuthorId);
+		}*/
 	}
 }
