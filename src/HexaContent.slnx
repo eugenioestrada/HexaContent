@@ -1,0 +1,28 @@
+<Solution>
+  <Folder Name="/Aspire/">
+    <Project Path="AppHost/HexaContent.AppHost.csproj" />
+    <Project Path="ServiceDefaults/HexaContent.ServiceDefaults.csproj" />
+  </Folder>
+  <Folder Name="/Aspire/Client/">
+    <Project Path="Minio.Client/HexaContent.Minio.Client.csproj" />
+  </Folder>
+  <Folder Name="/Aspire/Hosting/">
+    <Project Path="Minio.Hosting/HexaContent.Minio.Hosting.csproj" />
+  </Folder>
+  <Folder Name="/Components/" />
+  <Folder Name="/Components/ContentHub/">
+    <Project Path="ContentHub/HexaContent.ContentHub.csproj" />
+  </Folder>
+  <Folder Name="/Components/StaticForge/">
+    <Project Path="StaticForge/HexaContent.StaticForge.csproj" />
+  </Folder>
+  <Folder Name="/Shared/">
+    <Project Path="Core.Utils/HexaContent.Core.Utils.csproj" />
+    <Project Path="Core/HexaContent.Core.csproj" />
+    <Project Path="Infrastructure/HexaContent.Infrastructure.csproj" />
+    <Project Path="Services/HexaContent.Services.csproj" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="Tests.Architecture/HexaContent.Tests.Architecture.csproj" />
+  </Folder>
+</Solution>
