@@ -8,7 +8,6 @@ namespace HexaContent.Core.Model;
 [Table("article")]
 public sealed class Article : EntityBase<long>
 {
-
 	/// <summary>
 	/// Gets or sets the title of the article.
 	/// </summary>
@@ -34,6 +33,9 @@ public sealed class Article : EntityBase<long>
 	/// </summary>
 	public int AuthorId { get; set; }
 
+	/// <summary>
+	/// Gets or sets the status of the article.
+	/// </summary>
 	public ArticleStatus Status { get; set; } = ArticleStatus.Draft;
 
 	/// <summary>
@@ -41,16 +43,23 @@ public sealed class Article : EntityBase<long>
 	/// </summary>
 	public Author? Author { get; set; }
 
+	/// <summary>
+	/// Gets or sets the metadata associated with the article.
+	/// </summary>
 	public List<ArticleMeta>? Meta { get; set; }
+
+	/// <summary>
+	/// Gets or sets the sections of the article.
+	/// </summary>
 	public List<ArticleSection>? Sections { get; set; }
 
-    /// <summary>
-    /// Gets or sets the featured media id.
-    /// </summary>
-    public long? FeaturedMediaId { get; set; }
+	/// <summary>
+	/// Gets or sets the featured media id.
+	/// </summary>
+	public long? FeaturedMediaId { get; set; }
 
-    /// <summary>
-    /// Gets or sets the featured media.
-    /// </summary>
-    public Media? FeaturedMedia { get; set; }
+	/// <summary>
+	/// Gets or sets the featured media.
+	/// </summary>
+	public Media? FeaturedMedia { get; set; }
 }
