@@ -3,17 +3,17 @@
     <Project Path="AppHost/HexaContent.AppHost.csproj" />
     <Project Path="ServiceDefaults/HexaContent.ServiceDefaults.csproj" />
   </Folder>
-  <Folder Name="/Aspire/Client/">
+  <Folder Name="/Aspire/Client/" Id="13ca8702-5d67-975f-54a5-b8116de268d1">
     <Project Path="Minio.Client/HexaContent.Minio.Client.csproj" />
   </Folder>
-  <Folder Name="/Aspire/Hosting/">
+  <Folder Name="/Aspire/Hosting/" Id="97ee351f-7031-1fc3-5d98-0b3edba8d6a7">
     <Project Path="Minio.Hosting/HexaContent.Minio.Hosting.csproj" />
   </Folder>
   <Folder Name="/Components/" />
-  <Folder Name="/Components/ContentHub/">
+  <Folder Name="/Components/ContentHub/" Id="82003983-0596-fe6f-df1f-516e75b20c23">
     <Project Path="ContentHub/HexaContent.ContentHub.csproj" />
   </Folder>
-  <Folder Name="/Components/StaticForge/">
+  <Folder Name="/Components/StaticForge/" Id="028bea5a-5c7d-c8ce-9fce-1296d6bc7153">
     <Project Path="StaticForge/HexaContent.StaticForge.csproj" />
   </Folder>
   <Folder Name="/Shared/">
@@ -21,6 +21,9 @@
     <Project Path="Core/HexaContent.Core.csproj" />
     <Project Path="Infrastructure/HexaContent.Infrastructure.csproj" />
     <Project Path="Services/HexaContent.Services.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/" Id="8ec462fd-d22e-90a8-e5ce-7e832ba40c5d">
+    <File Path="../.github/workflows/dotnet.yml" />
   </Folder>
   <Folder Name="/Tests/">
     <Project Path="Tests.Architecture/HexaContent.Tests.Architecture.csproj" />
