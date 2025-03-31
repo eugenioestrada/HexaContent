@@ -7,7 +7,7 @@
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/HexaContent.ContentHub.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=edit" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 </head>
 <body>
     <header>
@@ -23,6 +23,35 @@
 
     <aside>
         <span class="header-name">HexaContent</span>
+
+        <nav>
+            <ul>
+                <li class="active">
+                    <i class="icon material-symbols-outlined">full_coverage</i>
+                    Contenidos
+                </li>
+                <li>
+                    <i class="icon material-symbols-outlined">library_books</i>
+                    Secciones
+                </li>
+                <li>
+                    <i class="icon material-symbols-outlined">hub</i>
+                    Temas
+                </li>
+                <li>
+                    <i class="icon material-symbols-outlined">groups</i>
+                    Redacción
+                </li>
+                <li>
+                    <i class="icon material-symbols-outlined">brand_awareness</i>
+                    Agencias
+                </li>
+                <li>
+                    <i class="icon material-symbols-outlined">settings</i>
+                    Configuraci&oacute;n
+                </li>
+            </ul>
+        </nav>
 
         @RenderSection("Aside", required: false)
     </aside>

@@ -139,9 +139,10 @@ public class ContentService(IArticlesRepository _articlesRepository, IAuthorsRep
 	private async Task AddAuthorsToArticles(List<Article> articles)
 	{
 		var authorsId = articles.Select(a => a.AuthorId).Distinct().ToArray();
-		/*foreach (var article in articles)
+        var authors = await _authorsRepository.Get();
+		foreach (var article in articles)
 		{
 			article.Author = authors.FirstOrDefault(a => a.Id == article.AuthorId);
-		}*/
+		}
 	}
 }
