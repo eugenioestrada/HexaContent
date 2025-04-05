@@ -5,12 +5,17 @@
 }
 
 <script src="https://cdn.jsdelivr.net/npm/@@editorjs/editorjs@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/header@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/list@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/quote@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/table@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/embed@latest"></script>
 
 <div class="editor">
     <form asp-action="Update" method="post">
         <input type="hidden" asp-for="Id" />
         <input type="hidden" asp-for="Title" />
-        <input type="hidden" asp-for="Content" />
+        <input id="content-input" type="hidden" asp-for="Content" />
 
         <div>
             <span class="edit-title" contenteditable="true" data-input-sync="Title">
@@ -22,8 +27,51 @@
         </div>
 
         <script>
+            const contentInput = document.getElementById("content-input");
+
+            let data = null;
+
+            try {
+                data = JSON.parse(contentInput.value);
+            } catch (error) {
+                data = {};
+            }
+
             const editor = new EditorJS({
-                holder: 'editorjs'
+                holder: 'editorjs',
+                tools: {
+                    header: {
+                        class: Header,
+                        inlineToolbar : true
+                    },
+                    list: {
+                        class: EditorjsList,
+                        inlineToolbar: true,
+                        config: {
+                            defaultStyle: 'unordered'
+                        },
+                    },
+                    quote: {
+                        class: Quote,
+                        inlineToolbar: true,
+                        shortcut: 'CMD+SHIFT+O',
+                        config: {
+                            quotePlaceholder: 'Enter a quote',
+                            captionPlaceholder: 'Quote\'s author',
+                        },
+                    },
+                    table: Table,
+                    embed: {
+                        class: Embed,
+                        config: {
+                            services: {
+                                youtube: true,
+                                coub: true
+                            }
+                        }
+                    },
+                },
+                data: data
             });
         </script>
 
@@ -106,6 +154,9 @@
     });
 
     function submit() {
-        document.querySelector(".editor form").submit();
+        editor.save().then((outputData) => {
+            contentInput.value = JSON.stringify(outputData);
+            document.querySelector(".editor form").submit();
+        });
     }
 </script>
