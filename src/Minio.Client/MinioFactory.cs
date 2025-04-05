@@ -42,6 +42,9 @@ public sealed class MinioFactory(MinioClientSettings settings) : IDisposable
 		return _client;
 	}
 
+	/// <summary>
+	/// Gets the bucket name from the settings.
+	/// </summary>
 	public string BucketName { get; } = settings.BucketName;
 
 	/// <summary>
