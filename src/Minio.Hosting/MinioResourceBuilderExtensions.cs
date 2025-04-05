@@ -1,6 +1,10 @@
 ﻿using Aspire.Hosting.ApplicationModel;
 using Aspire.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Amazon.S3;
+using System.Runtime.CompilerServices;
+using Amazon.S3.Model;
+using System.Net;
 
 namespace Aspire.Hosting;
 
@@ -13,8 +17,8 @@ public static class MinioResourceBuilderExtensions
 
 	private const int MinioPort = 9000;
 	private const int MinioConsolePort = 9001;
-	private const string MinioUser = "minio_user";
-	private const string MinioPassword = "minio_password";
+	public const string MinioUser = "minio_user";
+	public const string MinioPassword = "minio_password";
 
 	public static IResourceBuilder<MinioResource> AddMinio(
 		this IDistributedApplicationBuilder builder,
@@ -40,6 +44,34 @@ public static class MinioResourceBuilderExtensions
 			}
 		});
 
+		builder.Eventing.Subscribe<ResourceReadyEvent>(resource, async (@event, ct) =>
+		{
+			if (resource.Buckets.Any())
+			{
+				AmazonS3Client client = new(MinioUser, MinioPassword, new AmazonS3Config
+				{
+					ServiceURL = connectionString,
+					ForcePathStyle = true,
+				});
+				var buckets = await client.ListBucketsAsync();
+				foreach (var bucket in resource.Buckets)
+				{
+					if (!buckets.Buckets.Any(b => b.BucketName == bucket.Value))
+					{
+						var response = await client.PutBucketAsync(new PutBucketRequest
+						{
+							BucketName = bucket.Value
+						});
+
+						if (response.HttpStatusCode == HttpStatusCode.OK)
+						{
+							throw new DistributedApplicationException($"Failed to create bucket '{bucket.Value}' in Minio.");
+						}
+					}
+				}
+			}
+		});
+
 		return builder.AddResource(resource)
 					  .WithImage(MinioContainerImageTags.Image)
 					  .WithImageRegistry(MinioContainerImageTags.Registry)
@@ -55,5 +87,18 @@ public static class MinioResourceBuilderExtensions
 					  .WithHttpEndpoint(targetPort: MinioPort, name: MinioResource.PrimaryEndpointName)
 					  .WithHttpEndpoint(targetPort: MinioConsolePort, name: MinioResource.ConsoleEndpointName)
 					  .WithArgs("server", "/data");
+	}
+
+	public static IResourceBuilder<MinioBucketResource> AddBucket(
+		this IResourceBuilder<MinioResource> builder,
+		[ResourceName] string name, 
+		string? bucketName = null)
+	{
+		bucketName ??= name;
+
+		builder.Resource.AddBucket(name, bucketName);
+
+		var bucketResource = new MinioBucketResource(name, bucketName, builder.Resource);
+		return builder.ApplicationBuilder.AddResource(bucketResource);
 	}
 }

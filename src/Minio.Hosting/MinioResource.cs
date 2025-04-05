@@ -25,7 +25,13 @@ public sealed class MinioResource(string name) : ContainerResource(name), IResou
 
 	public ReferenceExpression ConnectionStringExpression =>
 		ReferenceExpression.Create(
-			$"http://{PrimaryEndpoint.Property(EndpointProperty.Host)}:{PrimaryEndpoint.Property(EndpointProperty.Port)}");
+			$"Primary=http://{PrimaryEndpoint.Property(EndpointProperty.Host)}:{PrimaryEndpoint.Property(EndpointProperty.Port)};Console=http://{ConsoleEndpoint.Property(EndpointProperty.Host)}:{ConsoleEndpoint.Property(EndpointProperty.Port)}");
 
+	public Dictionary<string, string> Buckets { get; } = [];
+
+	public void AddBucket(string name, string bucketName)
+	{
+		Buckets.TryAdd(name, bucketName);
+	}
 }
 
