@@ -28,31 +28,23 @@ public static class MinioExtensions
 	{
 		ArgumentNullException.ThrowIfNull(builder);
 
-		var settings = new MinioClientSettings();
-
-		builder.Configuration
-			   .GetSection(configurationSectionName)
-			   .Bind(settings);
-
 		if (builder.Configuration.GetConnectionString(connectionName) is string connectionString)
 		{
-			settings.Endpoint = connectionString;
-		}
+			MinioClientSettings settings = new MinioClientSettings(connectionString);
 
-		configureSettings?.Invoke(settings);
+			if (serviceKey is null)
+			{
+				builder.Services.AddSingleton(CreateMinioClientFactory);
+			}
+			else
+			{
+				builder.Services.AddKeyedSingleton(serviceKey, (sp, key) => CreateMinioClientFactory(sp));
+			}
 
-		if (serviceKey is null)
-		{
-			builder.Services.AddScoped(CreateMinioClientFactory);
-		}
-		else
-		{
-			builder.Services.AddKeyedScoped(serviceKey, (sp, key) => CreateMinioClientFactory(sp));
-		}
-
-		MinioFactory CreateMinioClientFactory(IServiceProvider _)
-		{
-			return new MinioFactory(settings);
+			MinioFactory CreateMinioClientFactory(IServiceProvider _)
+			{
+				return new MinioFactory(settings);
+			}
 		}
 	}
 }

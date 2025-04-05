@@ -1,14 +1,15 @@
-﻿using Aspire.Hosting.ApplicationModel;
-using Aspire.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Amazon.S3;
-using System.Runtime.CompilerServices;
+﻿using Amazon.S3;
 using Amazon.S3.Model;
+using Aspire.Hosting.ApplicationModel;
 using System.Net;
+using System.Text.RegularExpressions;
 
 namespace Aspire.Hosting;
 
-public static class MinioResourceBuilderExtensions
+/// <summary>
+/// Provides extension methods for building and configuring Minio resources.
+/// </summary>
+public static partial class MinioResourceBuilderExtensions
 {
 	private const string AddressEnvVarName = "MINIO_ADDRESS";
 	private const string ConsoleAddressEnvVarName = "MINIO_CONSOLE_ADDRESS";
@@ -20,16 +21,25 @@ public static class MinioResourceBuilderExtensions
 	public const string MinioUser = "minio_user";
 	public const string MinioPassword = "minio_password";
 
+	/// <summary>
+	/// Gets the regular expression used to parse the connection string.
+	/// </summary>
+	/// <returns>The regular expression for parsing the connection string.</returns>
+	[GeneratedRegex("Primary=([^;]+);Console=([^;]+)", RegexOptions.IgnoreCase, "en-US")]
+	private static partial Regex ConnectionStringRegex();
+
+	/// <summary>
+	/// Adds a Minio resource to the distributed application builder.
+	/// </summary>
+	/// <param name="builder">The distributed application builder.</param>
+	/// <param name="name">The name of the Minio resource.</param>
+	/// <param name="httpPort">The optional HTTP port for the Minio resource.</param>
+	/// <returns>The resource builder for the Minio resource.</returns>
 	public static IResourceBuilder<MinioResource> AddMinio(
 		this IDistributedApplicationBuilder builder,
 		string name,
 		int? httpPort = null)
 	{
-
-		// The AddResource method is a core API within .NET Aspire and is
-		// used by resource developers to wrap a custom resource in an
-		// IResourceBuilder<T> instance. Extension methods to customize
-		// the resource (if any exist) target the builder interface.
 		var resource = new MinioResource(name);
 
 		string? connectionString = null;
@@ -48,11 +58,13 @@ public static class MinioResourceBuilderExtensions
 		{
 			if (resource.Buckets.Any())
 			{
+				var match = ConnectionStringRegex().Match(connectionString);
 				AmazonS3Client client = new(MinioUser, MinioPassword, new AmazonS3Config
 				{
-					ServiceURL = connectionString,
+					ServiceURL = match.Groups[1].Value,
 					ForcePathStyle = true,
 				});
+
 				var buckets = await client.ListBucketsAsync();
 				foreach (var bucket in resource.Buckets)
 				{
@@ -89,9 +101,16 @@ public static class MinioResourceBuilderExtensions
 					  .WithArgs("server", "/data");
 	}
 
+	/// <summary>
+	/// Adds a bucket to the Minio resource.
+	/// </summary>
+	/// <param name="builder">The resource builder for the Minio resource.</param>
+	/// <param name="name">The name of the bucket resource.</param>
+	/// <param name="bucketName">The optional bucket name. If not provided, the name parameter will be used.</param>
+	/// <returns>The resource builder for the Minio bucket resource.</returns>
 	public static IResourceBuilder<MinioBucketResource> AddBucket(
 		this IResourceBuilder<MinioResource> builder,
-		[ResourceName] string name, 
+		[ResourceName] string name,
 		string? bucketName = null)
 	{
 		bucketName ??= name;

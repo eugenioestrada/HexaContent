@@ -1,19 +1,23 @@
 ﻿using Amazon.S3;
-using System.Net.Mail;
 
 namespace HexaContent.Minio.Client;
 
-public sealed class MinioFactory : IDisposable
+/// <summary>
+/// Factory class for creating and managing Amazon S3 clients.
+/// </summary>
+/// <remarks>
+/// Initializes a new instance of the <see cref="MinioFactory"/> class.
+/// </remarks>
+/// <param name="settings">The settings for the Minio client.</param>
+public sealed class MinioFactory(MinioClientSettings settings) : IDisposable
 {
 	private readonly SemaphoreSlim _semaphore = new(1, 1);
-	private readonly MinioClientSettings _settings;
 	private AmazonS3Client _client;
-
-	public MinioFactory(MinioClientSettings settings)
-	{
-		_settings = settings;
-	}
-
+	/// <summary>
+	/// Gets an instance of <see cref="AmazonS3Client"/> asynchronously.
+	/// </summary>
+	/// <param name="cancellationToken">A cancellation token to observe while waiting for the task to complete.</param>
+	/// <returns>A task that represents the asynchronous operation. The task result contains the <see cref="AmazonS3Client"/> instance.</returns>
 	public async Task<AmazonS3Client> GetAmazonS3ClientAsync(
 		CancellationToken cancellationToken = default)
 	{
@@ -23,9 +27,9 @@ public sealed class MinioFactory : IDisposable
 		{
 			if (_client is null)
 			{
-				_client = new AmazonS3Client(new AmazonS3Config
+				_client = new AmazonS3Client(settings.AccessKey, settings.AccessSecret, new AmazonS3Config
 				{
-					ServiceURL = _settings.Endpoint,
+					ServiceURL = settings.Primary,
 					ForcePathStyle = true
 				});
 			}
@@ -38,6 +42,11 @@ public sealed class MinioFactory : IDisposable
 		return _client;
 	}
 
+	public string BucketName { get; } = settings.BucketName;
+
+	/// <summary>
+	/// Releases the resources used by the <see cref="MinioFactory"/> class.
+	/// </summary>
 	public void Dispose()
 	{
 		_client?.Dispose();
