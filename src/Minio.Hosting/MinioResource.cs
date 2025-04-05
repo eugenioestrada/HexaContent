@@ -26,6 +26,8 @@ public sealed class MinioResource(string name) : ContainerResource(name), IResou
 
 	/// <summary>
 	/// Gets the connection string expression for the Minio resource.
+	/// The format of the connection string is:
+	/// Primary=http://<PrimaryEndpointHost>:<PrimaryEndpointPort>;Console=http://<ConsoleEndpointHost>:<ConsoleEndpointPort>
 	/// </summary>
 	public ReferenceExpression ConnectionStringExpression =>
 		ReferenceExpression.Create(
