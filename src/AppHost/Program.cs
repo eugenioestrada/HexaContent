@@ -40,11 +40,17 @@ builder.AddProject<HexaContent_ContentHub>("hub")
 builder.AddProject<HexaContent_StaticForge>("forge")
 	.WithReference(rabbitmq)
 	.WithReference(mysqldb)
-	.WithReference(storage)
 	.WithReference(bucket)
 	.WaitFor(rabbitmq)
 	.WaitFor(mysqldb)
 	.WaitFor(bucket);
+
+
+// Dynamic Bridge
+
+builder.AddProject<HexaContent_DynamicBridge>("bridge")
+	.WithReference(mysqldb)
+	.WaitFor(mysqldb);
 
 
 // Edge Proxy
