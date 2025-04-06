@@ -21,12 +21,8 @@ public static partial class MinioResourceBuilderExtensions
 	public const string MinioUser = "minio_user";
 	public const string MinioPassword = "minio_password";
 
-	/// <summary>
-	/// Gets the regular expression used to parse the connection string.
-	/// </summary>
-	/// <returns>The regular expression for parsing the connection string.</returns>
-	[GeneratedRegex("Primary=([^;]+);Console=([^;]+)", RegexOptions.IgnoreCase, "en-US")]
-	private static partial Regex ConnectionStringRegex();
+	[GeneratedRegex("Primary=([^;]+)", RegexOptions.IgnoreCase, "en-US")]
+	private static partial Regex MinioPrimaryRegex();
 
 	/// <summary>
 	/// Adds a Minio resource to the distributed application builder.
@@ -58,10 +54,18 @@ public static partial class MinioResourceBuilderExtensions
 		{
 			if (resource.Buckets.Any())
 			{
-				var match = ConnectionStringRegex().Match(connectionString);
+				var primaryMatch = MinioPrimaryRegex().Match(connectionString);
+
+				if (!primaryMatch.Success)
+				{
+					throw new InvalidOperationException("Failed to parse the Minio primary endpoint from the connection string.");
+				}
+
+				var serviceUrl = primaryMatch.Groups[1].Value;
+
 				AmazonS3Client client = new(MinioUser, MinioPassword, new AmazonS3Config
 				{
-					ServiceURL = match.Groups[1].Value,
+					ServiceURL = serviceUrl,
 					ForcePathStyle = true,
 				});
 
