@@ -77,7 +77,7 @@ public static partial class MinioResourceBuilderExtensions
 						var response = await client.PutBucketAsync(new PutBucketRequest
 						{
 							BucketName = bucket.Value,
-							CannedACL = S3CannedACL.PublicRead,
+							CannedACL = S3CannedACL.PublicRead
 						});
 
 						if (response.HttpStatusCode != HttpStatusCode.OK)
