@@ -48,7 +48,7 @@ builder.AddProject<HexaContent_StaticForge>("forge")
 
 // Dynamic Bridge
 
-builder.AddProject<HexaContent_DynamicBridge>("bridge")
+var bridge = builder.AddProject<HexaContent_DynamicBridge>("bridge")
 	.WithReference(mysqldb)
 	.WaitFor(mysqldb);
 
@@ -57,6 +57,7 @@ builder.AddProject<HexaContent_DynamicBridge>("bridge")
 
 builder.AddProject<HexaContent_EdgeProxy>("proxy")
 	.WithReference(bucket)
+	.WithReference(bridge)
 	.WaitFor(bucket);
 
 builder.Build().Run();
