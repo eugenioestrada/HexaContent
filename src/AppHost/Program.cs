@@ -46,4 +46,11 @@ builder.AddProject<HexaContent_StaticForge>("forge")
 	.WaitFor(mysqldb)
 	.WaitFor(bucket);
 
+
+// Edge Proxy
+
+builder.AddProject<HexaContent_EdgeProxy>("proxy")
+	.WithReference(bucket)
+	.WaitFor(bucket);
+
 builder.Build().Run();

@@ -13,6 +13,9 @@
   <Folder Name="/Components/ContentHub/" Id="82003983-0596-fe6f-df1f-516e75b20c23">
     <Project Path="ContentHub/HexaContent.ContentHub.csproj" />
   </Folder>
+  <Folder Name="/Components/EdgeProxy/">
+    <Project Path="EdgeProxy/HexaContent.EdgeProxy.csproj" />
+  </Folder>
   <Folder Name="/Components/StaticForge/" Id="028bea5a-5c7d-c8ce-9fce-1296d6bc7153">
     <Project Path="StaticForge/HexaContent.StaticForge.csproj" />
   </Folder>
