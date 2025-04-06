@@ -126,6 +126,8 @@ builder.Services.AddReverseProxy()
 				transformContext.Path = new PathString($"{transformContext.Path}.html");
 			});
 		}
+
+		builderContext.AddResponseHeader("Cache-Control", "max-age=60");
 	});
 
 builder.Services.AddOutputCache(options =>

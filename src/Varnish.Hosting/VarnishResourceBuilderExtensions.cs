@@ -24,13 +24,13 @@ public static partial class VarnishResourceBuilderExtensions
 					  .WithImageTag(VarnishContainerImageTags.Tag)
 					  .WithEnvironment(context =>
 					  {
-						  context.EnvironmentVariables["VARNISH_BACKEND_HOST"] = "localhost";
-						  context.EnvironmentVariables["VARNISH_BACKEND_PORT"] = "7116";
+						  context.EnvironmentVariables["VARNISH_BACKEND_HOST"] = "host.docker.internal";
+						  context.EnvironmentVariables["VARNISH_BACKEND_PORT"] = "5249";
 						  /* context.EnvironmentVariables[AddressEnvVarName] = $":{MinioPort}";
 						  context.EnvironmentVariables[ConsoleAddressEnvVarName] = $":{MinioConsolePort}";
 						  context.EnvironmentVariables[UserEnvVarName] = MinioUser;
 						  context.EnvironmentVariables[PasswordEnvVarName] = MinioPassword; */
 					  })
-					  .WithHttpEndpoint(targetPort: httpPort ?? 8080, name: VarnishResource.PrimaryEndpointName);
+					  .WithHttpEndpoint(targetPort: 80, name: VarnishResource.PrimaryEndpointName);
 	}
 }
