@@ -76,7 +76,7 @@ public static partial class MinioResourceBuilderExtensions
 							CannedACL = S3CannedACL.PublicRead,
 						});
 
-						if (response.HttpStatusCode == HttpStatusCode.OK)
+						if (response.HttpStatusCode != HttpStatusCode.OK)
 						{
 							throw new DistributedApplicationException($"Failed to create bucket '{bucket.Value}' in Minio.");
 						}
