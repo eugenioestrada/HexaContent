@@ -55,9 +55,19 @@ var bridge = builder.AddProject<HexaContent_DynamicBridge>("bridge")
 
 // Edge Proxy
 
-builder.AddProject<HexaContent_EdgeProxy>("proxy")
+var proxy = builder.AddProject<HexaContent_EdgeProxy>("proxy")
 	.WithReference(bucket)
 	.WithReference(bridge)
 	.WaitFor(bucket);
+
+// Varnish
+
+// builder.AddVarnish("varnish");
+
+builder.AddVarnish("varnish")
+	.WithReference(proxy)
+	.WithReference(bridge)
+	.WaitFor(bucket)
+	.WaitFor(proxy);
 
 builder.Build().Run();

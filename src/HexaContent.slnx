@@ -8,12 +8,13 @@
   </Folder>
   <Folder Name="/Aspire/Hosting/" Id="97ee351f-7031-1fc3-5d98-0b3edba8d6a7">
     <Project Path="Minio.Hosting/HexaContent.Minio.Hosting.csproj" />
+    <Project Path="Varnish.Hosting/HexaContent.Varnish.Hosting.csproj" />
   </Folder>
   <Folder Name="/Components/" />
   <Folder Name="/Components/ContentHub/" Id="82003983-0596-fe6f-df1f-516e75b20c23">
     <Project Path="ContentHub/HexaContent.ContentHub.csproj" />
   </Folder>
-  <Folder Name="/Components/DynamicBridge/">
+  <Folder Name="/Components/DynamicBridge/" Id="77c162bf-2d44-52d5-0525-824554e9285a">
     <Project Path="DynamicBridge/HexaContent.DynamicBridge.csproj" />
   </Folder>
   <Folder Name="/Components/EdgeProxy/" Id="e793f97c-3693-a4a8-a87d-024695323ded">
