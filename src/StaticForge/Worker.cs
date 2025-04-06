@@ -31,17 +31,42 @@ public class Worker : BackgroundService
 
             foreach (var bucket in buckets.Buckets)
 			{
-                await client.PutObjectAsync(new PutObjectRequest
-                {
-                    BucketName = bucket.BucketName,
-                    Key = "test.html",
-                    ContentType = ContentTypes.TextHtml,
-					CannedACL = S3CannedACL.PublicRead,
-					ContentBody = "<html><body><h1>Hello, World!</h1></body></html>"
-				});
+				Dictionary<string, string> keyValuePairs = new()
+				{
+					{ "test.html", "<html><body><h1>Test!</h1></body></html>" },
+					{ "section/article.html", "<html><body><h1>Article!</h1></body></html>" },
+					{ "robots.txt", "robots" },
+					{ "index.html" , "<html><body><h1>Index!</h1></body></html>" },
+					{ "sitemaps/sitemap.xml", "<?xml version=\"1.0\" encoding=\"UTF-8\"?><sitemap />" }
+				};
+
+				foreach (var kvp in keyValuePairs)
+				{
+					var contentType = kvp.Key switch
+					{
+						_ when kvp.Key.EndsWith(".html") => ContentTypes.TextHtml,
+						_ when kvp.Key.EndsWith(".css") => ContentTypes.TextCss,
+						_ when kvp.Key.EndsWith(".xml") => ContentTypes.ApplicationXml,
+						_ => ContentTypes.TextPlain
+					};
+
+					await PutContent(client, bucket, kvp.Key, kvp.Value, kvp.Key.EndsWith(".txt") ? ContentTypes.TextPlain : ContentTypes.TextHtml);
+				}
 			}
 
 			await Task.Delay(1000, stoppingToken);
         }
-    }
+
+		static async Task PutContent(AmazonS3Client client, S3Bucket bucket, string key, string content, string contentType)
+		{
+			await client.PutObjectAsync(new PutObjectRequest
+			{
+				BucketName = bucket.BucketName,
+				Key = key,
+				ContentType = contentType,
+				CannedACL = S3CannedACL.PublicRead,
+				ContentBody = content
+			});
+		}
+	}
 }
