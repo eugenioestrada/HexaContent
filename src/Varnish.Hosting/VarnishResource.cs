@@ -9,4 +9,7 @@ public sealed class VarnishResource(string name) : ContainerResource(name), IRes
 	private EndpointReference? _primaryEndpoint;
 
 	public EndpointReference PrimaryEndpoint => _primaryEndpoint ??= new(this, PrimaryEndpointName);
+
+	public string VarnishBackendHost { get; internal set; }
+	public int VarnishBackendPort { get; internal set; }
 }

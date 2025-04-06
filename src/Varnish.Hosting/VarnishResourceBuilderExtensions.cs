@@ -1,4 +1,5 @@
 ﻿using Aspire.Hosting.ApplicationModel;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Aspire.Hosting;
 
@@ -18,19 +19,30 @@ public static partial class VarnishResourceBuilderExtensions
 	{
 		var resource = new VarnishResource(name);
 
+		builder.Eventing.Subscribe<BeforeResourceStartedEvent>(resource, async (@event, ct) =>
+		{			
+			var enviromentValues = await resource.GetEnvironmentVariableValuesAsync();
+			if (enviromentValues.TryGetValue("services__proxy__http__0", out var proxy))
+			{
+				var proxyUri = new Uri(proxy);
+				resource.VarnishBackendHost = proxyUri.Host;
+				resource.VarnishBackendPort = proxyUri.Port;
+			}
+		});
+
 		return builder.AddResource(resource)
 					  .WithImage(VarnishContainerImageTags.Image)
 					  .WithImageRegistry(VarnishContainerImageTags.Registry)
 					  .WithImageTag(VarnishContainerImageTags.Tag)
+					  .WithBindMount(Path.Combine(Environment.CurrentDirectory, "config"), "/config", true)
 					  .WithEnvironment(context =>
 					  {
-						  context.EnvironmentVariables["VARNISH_BACKEND_HOST"] = "host.docker.internal";
-						  context.EnvironmentVariables["VARNISH_BACKEND_PORT"] = "5249";
-						  /* context.EnvironmentVariables[AddressEnvVarName] = $":{MinioPort}";
-						  context.EnvironmentVariables[ConsoleAddressEnvVarName] = $":{MinioConsolePort}";
-						  context.EnvironmentVariables[UserEnvVarName] = MinioUser;
-						  context.EnvironmentVariables[PasswordEnvVarName] = MinioPassword; */
+						  context.EnvironmentVariables["VARNISH_BACKEND_HOST"] = resource.VarnishBackendHost;
+						  context.EnvironmentVariables["VARNISH_BACKEND_PORT"] = resource.VarnishBackendPort;
+						  context.EnvironmentVariables["VARNISH_SIZE"] = "2G";
 					  })
-					  .WithHttpEndpoint(targetPort: 80, name: VarnishResource.PrimaryEndpointName);
+					  .WithHttpEndpoint(targetPort: 80, name: VarnishResource.PrimaryEndpointName)
+					  .WithArgs("-t", "3600");
+		// -f", "/config/default.vcl"
 	}
 }
