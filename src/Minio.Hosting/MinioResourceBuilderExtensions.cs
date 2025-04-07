@@ -84,6 +84,14 @@ public static partial class MinioResourceBuilderExtensions
 						{
 							throw new DistributedApplicationException($"Failed to create bucket '{bucket.Value}' in Minio.");
 						}
+						else
+						{
+							var policy = await client.PutBucketPolicyAsync(new()
+							{
+								BucketName = bucket.Value,
+								Policy = "public"
+							});
+						}
 					}
 				}
 			}
