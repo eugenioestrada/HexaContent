@@ -65,9 +65,9 @@ var proxy = builder.AddProject<HexaContent_EdgeProxy>("proxy")
 // builder.AddVarnish("varnish");
 
 builder.AddVarnish("varnish")
-	.WithReference(proxy)
 	.WithReference(bridge)
-	.WaitFor(bucket)
+	.WithReference(proxy)
+	.WaitFor(bridge)
 	.WaitFor(proxy);
 
 builder.Build().Run();

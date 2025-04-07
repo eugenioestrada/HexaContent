@@ -3,4 +3,7 @@ var app = builder.Build();
 
 app.MapGet("/", () => "Hello World!");
 
+app.MapGet("/dynamic/", () => "Hello Dynamic!");
+
+
 app.Run();

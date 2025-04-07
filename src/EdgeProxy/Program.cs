@@ -116,7 +116,7 @@ builder.Services.AddReverseProxy()
 		}
 		else
 		{
-			builderContext.AddPathSet($"/{bucketName}/test.html");
+			builderContext.AddPathSet($"/{bucketName}/index.html");
 		}
 
 		if (builderContext.Route.RouteId == "all")
