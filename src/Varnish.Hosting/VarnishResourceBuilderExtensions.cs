@@ -51,6 +51,11 @@ public static partial class VarnishResourceBuilderExtensions
 						.between_bytes_timeout  = 2s;
 					}
 
+					sub vcl_backend_response {
+						set beresp.grace = 1h;
+						set beresp.keep = 30m;
+					}
+
 					sub vcl_recv {
 						if (req.method != "GET" &&
 							req.method != "OPTIONS") {
