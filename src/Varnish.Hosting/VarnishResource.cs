@@ -12,4 +12,5 @@ public sealed class VarnishResource(string name) : ContainerResource(name), IRes
 
 	public string VarnishBackendHost { get; internal set; }
 	public int VarnishBackendPort { get; internal set; }
+	public string ConfigPath { get; internal set; }
 }

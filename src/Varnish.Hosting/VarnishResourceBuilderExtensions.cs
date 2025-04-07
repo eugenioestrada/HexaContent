@@ -27,22 +27,62 @@ public static partial class VarnishResourceBuilderExtensions
 				var proxyUri = new Uri(proxy);
 				resource.VarnishBackendHost = proxyUri.Host;
 				resource.VarnishBackendPort = proxyUri.Port;
+
+				string vclContent = $$"""
+					vcl 4.1;
+
+					backend server1 {
+						.host = "{{resource.VarnishBackendHost}}";
+						.port = "{{resource.VarnishBackendPort}}";
+						.max_connections = 100;
+						.probe = {
+							.request =
+								"HEAD / HTTP/1.1"
+								"Host: localhost"
+								"Connection: close"
+								"User-Agent: Varnish Health Probe";
+							.interval  = 10s;
+							.timeout   = 5s;
+							.window    = 5;
+							.threshold = 3;
+						}
+						.connect_timeout        = 5s;
+						.first_byte_timeout     = 90s;
+						.between_bytes_timeout  = 2s;
+					}
+
+					sub vcl_recv {
+						if (req.method != "GET" &&
+							req.method != "OPTIONS") {
+							return (pipe);
+						}
+
+						unset req.http.Cookie;
+					}
+				""";
+
+				File.WriteAllText(Path.Combine(resource.ConfigPath, "default.vcl"), vclContent);
 			}
 		});
+
+		resource.ConfigPath = Path.Combine(Path.GetTempPath(), "varnish-config");
+
+		if (!Directory.Exists(resource.ConfigPath))
+		{
+			Directory.CreateDirectory(resource.ConfigPath);
+		}
 
 		return builder.AddResource(resource)
 					  .WithImage(VarnishContainerImageTags.Image)
 					  .WithImageRegistry(VarnishContainerImageTags.Registry)
 					  .WithImageTag(VarnishContainerImageTags.Tag)
-					  .WithBindMount(Path.Combine(Environment.CurrentDirectory, "config"), "/config", true)
+					  .WithBindMount(resource.ConfigPath, "/varnish/config", true)
 					  .WithEnvironment(context =>
 					  {
-						  context.EnvironmentVariables["VARNISH_BACKEND_HOST"] = resource.VarnishBackendHost;
-						  context.EnvironmentVariables["VARNISH_BACKEND_PORT"] = resource.VarnishBackendPort;
 						  context.EnvironmentVariables["VARNISH_SIZE"] = "2G";
 					  })
 					  .WithHttpEndpoint(targetPort: 80, name: VarnishResource.PrimaryEndpointName)
-					  .WithArgs("-t", "3600");
-		// -f", "/config/default.vcl"
+					  .WithArgs("-t", "3600", "-f", "/varnish/config/default.vcl");
+
 	}
 }

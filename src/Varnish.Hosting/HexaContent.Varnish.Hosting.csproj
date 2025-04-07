@@ -7,16 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="config\default.vcl" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="config\default.vcl">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Aspire.Hosting" Version="9.1.0" />
   </ItemGroup>
 
