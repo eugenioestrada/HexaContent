@@ -42,7 +42,7 @@ public static partial class VarnishResourceBuilderExtensions
 						.max_connections = 100;
 						.probe = {
 							.request =
-								"HEAD / HTTP/1.1"
+								"GET /_health HTTP/1.1"
 								"Host: localhost"
 								"Connection: close"
 								"User-Agent: Varnish Health Probe";
@@ -62,7 +62,7 @@ public static partial class VarnishResourceBuilderExtensions
 						.max_connections = 100;
 						.probe = {
 							.request =
-								"HEAD / HTTP/1.1"
+								"GET /_health HTTP/1.1"
 								"Host: localhost"
 								"Connection: close"
 								"User-Agent: Varnish Health Probe";
