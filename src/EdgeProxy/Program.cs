@@ -28,15 +28,6 @@ app.MapReverseProxy();
 
 app.MapGet("/_health", () => "Ok!");
 
-app.MapWhen(ctx => ctx.Request.Method == "HEAD" && ctx.Request.Path == "/", HandleHead);
+app.HandleHead();
 
 app.Run();
-
-static void HandleHead(IApplicationBuilder app)
-{
-	app.Run(async context =>
-	{
-		context.Response.StatusCode = 200;
-		await context.Response.WriteAsync($"Ok!");
-	});
-}
