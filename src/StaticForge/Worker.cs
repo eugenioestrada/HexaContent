@@ -33,9 +33,10 @@ public class Worker : BackgroundService
 			{
 				Dictionary<string, string> keyValuePairs = new()
 				{
-					{ "test.html", "<html><body><h1>Test!</h1></body></html>" },
+					{ "test.html", "<html><body><h1>Test!</h1><esi:include src=\"/esi.html\"/><esi:include src=\"/dynamic/\"/></body></html>" },
 					{ "section/article.html", "<html><body><h1>Article!</h1></body></html>" },
 					{ "robots.txt", "robots" },
+					{ "esi.html" , "<h2>ESI!</h2>" },
 					{ "index.html" , "<html><body><h1>Index!</h1></body></html>" },
 					{ "sitemaps/sitemap.xml", "<?xml version=\"1.0\" encoding=\"UTF-8\"?><sitemap />" }
 				};

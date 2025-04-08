@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Core.Utils\HexaContent.Core.Utils.csproj" />
     <ProjectReference Include="..\ServiceDefaults\HexaContent.ServiceDefaults.csproj" />
   </ItemGroup>
 

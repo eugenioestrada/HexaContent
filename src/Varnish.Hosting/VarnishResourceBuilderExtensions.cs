@@ -22,22 +22,47 @@ public static partial class VarnishResourceBuilderExtensions
 		builder.Eventing.Subscribe<BeforeResourceStartedEvent>(resource, async (@event, ct) =>
 		{			
 			var enviromentValues = await resource.GetEnvironmentVariableValuesAsync();
-			if (enviromentValues.TryGetValue("services__proxy__http__0", out var proxy))
+			if (enviromentValues.TryGetValue("services__proxy__http__0", out var proxy) &&
+				enviromentValues.TryGetValue("services__bridge__http__0", out var bridge) &&
+				Uri.TryCreate(proxy, UriKind.Absolute, out var proxyUri) &&
+				Uri.TryCreate(bridge, UriKind.Absolute, out var bridgeUri))
 			{
-				var proxyUri = new Uri(proxy);
 				resource.VarnishBackendHost = proxyUri.Host;
 				resource.VarnishBackendPort = proxyUri.Port;
+
+				resource.VarnishDynamicHost = bridgeUri.Host;
+				resource.VarnishDynamicPort = bridgeUri.Port;
 
 				string vclContent = $$"""
 					vcl 4.1;
 
-					backend server1 {
+					backend default {
 						.host = "{{resource.VarnishBackendHost}}";
 						.port = "{{resource.VarnishBackendPort}}";
 						.max_connections = 100;
 						.probe = {
 							.request =
-								"HEAD / HTTP/1.1"
+								"GET /_health HTTP/1.1"
+								"Host: localhost"
+								"Connection: close"
+								"User-Agent: Varnish Health Probe";
+							.interval  = 10s;
+							.timeout   = 5s;
+							.window    = 5;
+							.threshold = 3;
+						}
+						.connect_timeout        = 5s;
+						.first_byte_timeout     = 90s;
+						.between_bytes_timeout  = 2s;
+					}
+
+					backend dynamic {
+						.host = "{{resource.VarnishDynamicHost}}";
+						.port = "{{resource.VarnishDynamicPort}}";
+						.max_connections = 100;
+						.probe = {
+							.request =
+								"GET /_health HTTP/1.1"
 								"Host: localhost"
 								"Connection: close"
 								"User-Agent: Varnish Health Probe";
@@ -54,9 +79,17 @@ public static partial class VarnishResourceBuilderExtensions
 					sub vcl_backend_response {
 						set beresp.grace = 1h;
 						set beresp.keep = 30m;
+						
+						set beresp.do_esi = true;
 					}
 
 					sub vcl_recv {
+						if (req.url ~ "^/dynamic/") {
+							set req.backend_hint = dynamic;
+						} else {
+							set req.backend_hint = default;
+						}
+						
 						if (req.method != "GET" &&
 							req.method != "OPTIONS") {
 							return (pipe);
