@@ -33,7 +33,9 @@ builder.AddProject<HexaContent_ContentHub>("hub")
 	.WithReference(bucket)
 	.WaitFor(rabbitmq)
 	.WaitFor(mysqldb)
-	.WaitFor(bucket);
+	.WaitFor(bucket)
+	.WithUrlForEndpoint("http", u => u.DisplayText = "Content Hub (HTTP)")
+	.WithUrlForEndpoint("https", u => u.DisplayText = "Content Hub (HTTPS)");
 
 // Static Forge
 
@@ -50,7 +52,9 @@ builder.AddProject<HexaContent_StaticForge>("forge")
 
 var bridge = builder.AddProject<HexaContent_DynamicBridge>("bridge")
 	.WithReference(mysqldb)
-	.WaitFor(mysqldb);
+	.WaitFor(mysqldb)
+	.WithUrlForEndpoint("http", u => u.DisplayText = "Dynamic Bridge (HTTP)")
+	.WithUrlForEndpoint("https", u => u.DisplayText = "Dynamic Bridge (HTTPS)");
 
 
 // Edge Proxy
@@ -58,7 +62,9 @@ var bridge = builder.AddProject<HexaContent_DynamicBridge>("bridge")
 var proxy = builder.AddProject<HexaContent_EdgeProxy>("proxy")
 	.WithReference(bucket)
 	.WithReference(bridge)
-	.WaitFor(bucket);
+	.WaitFor(bucket)
+	.WithUrlForEndpoint("http", u => u.DisplayText = "Proxy (HTTP)")
+	.WithUrlForEndpoint("https", u => u.DisplayText = "Proxy (HTTPS)");
 
 // Varnish
 
@@ -68,6 +74,8 @@ builder.AddVarnish("varnish")
 	.WithReference(bridge)
 	.WithReference(proxy)
 	.WaitFor(bridge)
-	.WaitFor(proxy);
+	.WaitFor(proxy)
+	.WithUrlForEndpoint("http", u => u.DisplayText = "Varnish (HTTP)")	
+	.WithUrlForEndpoint("https", u => u.DisplayText = "Varnish (HTTPS)");
 
 builder.Build().Run();
