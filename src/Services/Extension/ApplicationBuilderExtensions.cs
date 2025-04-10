@@ -16,5 +16,6 @@ public static class ApplicationBuilderExtensions
 	public static void AddServices(this IHostApplicationBuilder builder)
     {
 		builder.Services.AddScoped<IContentService, ContentService>();
+		builder.Services.AddScoped<IRenderService, RenderService>();
 	}
 }
