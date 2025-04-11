@@ -88,10 +88,8 @@
 
 @section Aside {
     <div class="editor-meta">
-        <select>
-            <option selected>Author 1</option>
-            <option>Author 2</option>
-            <option>Author 3</option>
+        <select asp-for="AuthorId" asp-items="@(new SelectList(Model.Authors, "Id", "Name"))">
+            <option value="">Select an author</option>
         </select>
 
         <select>
