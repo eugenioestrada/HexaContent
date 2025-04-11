@@ -1,3 +1,5 @@
+using HexaContent.Core.Model;
+
 namespace HexaContent.ContentHub.Models;
 
 public class EditArticleModel
