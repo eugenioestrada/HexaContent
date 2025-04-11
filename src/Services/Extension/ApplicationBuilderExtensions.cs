@@ -17,5 +17,6 @@ public static class ApplicationBuilderExtensions
     {
 		builder.Services.AddScoped<IContentService, ContentService>();
 		builder.Services.AddScoped<IRenderService, RenderService>();
+		builder.Services.AddScoped<ISectionService, SectionService>();
 	}
 }
