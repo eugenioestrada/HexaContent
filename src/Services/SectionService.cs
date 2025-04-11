@@ -28,7 +28,8 @@ public class SectionService(ISectionsRepository _sectionsRepository) : ISectionS
     {
         try
         {
-            _sectionsRepository.Update(section);
+            section.UpdatedAt = DateTime.UtcNow;
+			_sectionsRepository.Update(section);
             await _sectionsRepository.SaveChangesAsync();
             return Result<bool>.Success(true);
         }
@@ -45,7 +46,7 @@ public class SectionService(ISectionsRepository _sectionsRepository) : ISectionS
             var section = await _sectionsRepository.FindAsync(sectionId);
             if (section != null)
             {
-                _sectionsRepository.Remove(section);
+                _sectionsRepository.Delete(section);
                 await _sectionsRepository.SaveChangesAsync();
                 return Result<bool>.Success(true);
             }
