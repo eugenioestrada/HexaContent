@@ -4,7 +4,7 @@ using HexaContent.Core.Services;
 
 namespace HexaContent.ContentHub.Controllers;
 
-public class HomeController([FromServices] IContentService _contentService) : Controller
+public class HomeController([FromServices] IContentService _contentService, [FromServices] IAuthorService _authorService) : Controller
 {
     public async Task<IActionResult> Index()
     {
@@ -34,13 +34,20 @@ public class HomeController([FromServices] IContentService _contentService) : Co
 
 		var article = result.Value;
 
+        var authorsResult = await _authorService.GetAllAuthors();
+        if (!authorsResult.IsSuccess)
+        {
+            return BadRequest(authorsResult.ErrorMessage);
+        }
+
 		return View(new EditArticleModel {
             Id = article.Id,
 			Content = article.Content,
 			Title = article.Title,
 			AuthorId = article.Author.Id,
 			CreatedAt = article.PublishedAt,
-			UpdatedAt = article.UpdatedAt
+			UpdatedAt = article.UpdatedAt,
+            Authors = authorsResult.Value.ToList()
 		});
     }
 
