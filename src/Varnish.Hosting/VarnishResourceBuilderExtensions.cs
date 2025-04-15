@@ -79,7 +79,8 @@ public static partial class VarnishResourceBuilderExtensions
 					sub vcl_backend_response {
 						set beresp.grace = 1h;
 						set beresp.keep = 30m;
-						
+						set beresp.ttl = 1m;
+
 						set beresp.do_esi = true;
 					}
 

@@ -102,6 +102,15 @@ public static class ConfigExtensions
 					builderContext.AddPathSet($"/{bucketName}/index.html");
 				}
 
+				List<string> headersToRemove = [ "x-amz-request-id", "x-amz-id-2", "x-ratelimit-limit", "x-ratelimit-remaining", "server", "last-modified", "date" ];
+
+				foreach (var header in headersToRemove)
+				{
+					builderContext.AddResponseHeaderRemove(header);
+				}
+
+				builderContext.AddResponseHeader("server", "Difoosion Proxy");
+
 				if (builderContext.Route.RouteId == "all")
 				{
 					builderContext.AddRequestTransform(async (transformContext) =>
