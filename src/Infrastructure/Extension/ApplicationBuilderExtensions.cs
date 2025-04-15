@@ -115,12 +115,17 @@ public static partial class ApplicationBuilderExtensions
 
             await authorsRepository.SaveChangesAsync();
 
-            var articles = new List<Article>
+            string content = """
+                {"time":1744735376406,"blocks":[{"id":"PMiiXoIiZO","type":"paragraph","data":{"text":"ryyrry"}},{"id":"w2kRVmyHGS","type":"list","data":{"style":"checklist","meta":{},"items":[{"content":"ryryry","meta":{"checked":false},"items":[]}]}},{"id":"V4l5cDbk7W","type":"list","data":{"style":"unordered","meta":{},"items":[{"content":"ryyr","meta":{},"items":[]}]}},{"id":"oLlq7861t9","type":"list","data":{"style":"ordered","meta":{"counterType":"numeric"},"items":[{"content":"yrry","meta":{},"items":[]},{"content":"gddgdgdg","meta":{},"items":[]}]}},{"id":"W75lHTUQyH","type":"quote","data":{"text":"dgdg","caption":"dghdddhg","alignment":"left"}}],"version":"2.31.0-rc.7"}
+                """;
+
+
+			var articles = new List<Article>
             {
                 new Article
                 {
                     Title = "Test Article",
-                    Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                    Content = content,
                     PublishedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow,
                     Author = authors[0]
@@ -128,7 +133,7 @@ public static partial class ApplicationBuilderExtensions
                 new Article
                 {
                     Title = "Another Article",
-                    Content = "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                    Content = content,
 					PublishedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow,
                     Author = authors[1]
@@ -136,7 +141,7 @@ public static partial class ApplicationBuilderExtensions
                 new Article
                 {
                     Title = "Yet Another Article",
-                    Content = "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+                    Content = content,
 					PublishedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow,
                     Author = authors[2]
