@@ -189,3 +189,26 @@ main .editor .edit-content {
     font-size: 19px;
     line-height: 32px
 }
+
+.btn {
+    border-radius: 4px;
+    background: #666;
+    color: #fff;
+    display: flex;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    text-align: center;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px; /* 150% */
+    cursor: pointer;
+    width: 100px;
+}
+
+    .btn:hover {
+        background: #808080;
+    }

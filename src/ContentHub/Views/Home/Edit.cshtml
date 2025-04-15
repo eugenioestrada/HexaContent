@@ -12,7 +12,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@@editorjs/embed@latest"></script>
 
 <div class="editor">
-    <form asp-action="Update" method="post">
+    <form id="editor-form" asp-action="Update" method="post">
         <input type="hidden" asp-for="Id" />
         <input type="hidden" asp-for="Title" />
         <input id="content-input" type="hidden" asp-for="Content" />
@@ -74,21 +74,19 @@
                 data: data
             });
         </script>
-
-        <div>
-            <input type="hidden" asp-for="AuthorId" />
-        </div>
     </form>
 </div>
 
 @section Actions
 {
-    <button onclick="submit()">Save</button>
+    <a asp-controller="Preview" asp-action="Index" asp-route-articleId="@Model.Id" target="_blank" class="btn">Preview</a>
+
+    <button class="btn" onclick="submit()">Save</button>
 }
 
 @section Aside {
     <div class="editor-meta">
-        <select asp-for="AuthorId" asp-items="@(new SelectList(Model.Authors, "Id", "Name"))">
+        <select form="editor-form" asp-for="AuthorId" asp-items="@(new SelectList(Model.Authors, "Id", "Name"))">
             <option value="">Select an author</option>
         </select>
 

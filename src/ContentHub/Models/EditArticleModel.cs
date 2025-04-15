@@ -10,5 +10,5 @@ public class EditArticleModel
     public DateTime? CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
     public int AuthorId { get; set; }
-    public List<Author> Authors { get; set; }
+    public List<Author>? Authors { get; set; }
 }
