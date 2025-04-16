@@ -5,8 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HexaContent.ContentHub.Controllers;
 
+[Route("[controller]")]
 public class PreviewController([FromServices] IRenderService renderService, [FromServices] IContentService contentService) : Controller
 {
+	[Route("{articleId:long}")]
 	public async Task<IActionResult> Index(long articleId)
 	{
 		var result = await contentService.GetArticle(articleId);

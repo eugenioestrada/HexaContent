@@ -25,7 +25,8 @@ public class ContentService(IArticlesRepository _articlesRepository, IAuthorsRep
     {
         try
         {
-            _articlesRepository.Update(article);
+            article.UpdatedAt = DateTime.UtcNow;
+			_articlesRepository.Update(article);
             await _articlesRepository.SaveChangesAsync();
             return Result<bool>.Success(true);
         }

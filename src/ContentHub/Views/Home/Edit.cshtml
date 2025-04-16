@@ -10,6 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@@editorjs/quote@latest"></script>
 <script src="https://cdn.jsdelivr.net/npm/@@editorjs/table@latest"></script>
 <script src="https://cdn.jsdelivr.net/npm/@@editorjs/embed@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@editorjs/image@latest"></script>
 
 <div class="editor">
     <form id="editor-form" asp-action="Update" method="post">
@@ -70,6 +71,15 @@
                             }
                         }
                     },
+                    image: {
+                        class: ImageTool,
+                        config: {
+                            endpoints: {
+                                byFile: '/Images/UploadFile', // Your backend file uploader endpoint
+                                byUrl: '/Images/FetchUrl', // Your endpoint that provides uploading by Url
+                            }
+                        }    
+                    }
                 },
                 data: data
             });
