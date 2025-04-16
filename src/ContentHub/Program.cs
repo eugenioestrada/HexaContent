@@ -1,5 +1,6 @@
 using HexaContent.Infrastructure.Extension;
 using HexaContent.Services.Extension;
+using HexaContent.Minio.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,8 @@ builder.AddDbContext(builder.Configuration);
 builder.AddRepositories();
 builder.AddMessageBus();
 builder.AddServices();
+builder.AddMinioClient("bucket");
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
