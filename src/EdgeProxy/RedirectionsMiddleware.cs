@@ -1,6 +1,6 @@
 ﻿namespace HexaContent.EdgeProxy;
 
-public class RedirectionsMiddlewaree(RequestDelegate next)
+public class RedirectionsMiddleware(RequestDelegate next)
 {
 	public async Task InvokeAsync(HttpContext context)
 	{
