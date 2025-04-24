@@ -1,4 +1,5 @@
 using HexaContent.Core.Utils;
+using HexaContent.EdgeProxy;
 using HexaContent.EdgeProxy.Config;
 using System.Text.RegularExpressions;
 
@@ -24,6 +25,7 @@ builder.ConfigureReverseProxy(bucketUrl, bucketName);
 
 var app = builder.Build();
 
+app.UseRedirections();
 app.MapReverseProxy();
 
 app.MapGet("/_health", () => "Ok!");
