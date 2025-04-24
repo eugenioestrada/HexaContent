@@ -42,6 +42,15 @@ public class PreviewController([FromServices] IRenderService renderService, [Fro
 			            border-radius: 8px;
 			            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 			        }
+
+					.container img {
+						max-width: 100%
+					}
+
+					.container figure.image {
+						margin: 0
+					}
+
 			        h1 {
 			            color: #444;
 			        }

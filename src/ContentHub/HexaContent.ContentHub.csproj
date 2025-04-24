@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.7" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Core\HexaContent.Core.csproj" />
     <ProjectReference Include="..\Infrastructure\HexaContent.Infrastructure.csproj" />
     <ProjectReference Include="..\Minio.Client\HexaContent.Minio.Client.csproj" />

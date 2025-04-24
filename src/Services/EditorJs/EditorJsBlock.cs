@@ -7,6 +7,7 @@ namespace HexaContent.Services.EditorJs;
 [JsonDerivedType(typeof(EditorJsHeadingBlock), typeDiscriminator: "heading")]
 [JsonDerivedType(typeof(EditorJsListBlock), typeDiscriminator: "list")]
 [JsonDerivedType(typeof(EditorJsQuoteBlock), typeDiscriminator: "quote")]
+[JsonDerivedType(typeof(EditorJsImageBlock), typeDiscriminator: "image")]
 public class EditorJsBlock
 {
 	public string Id { get; set; }

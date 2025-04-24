@@ -2,6 +2,7 @@
 using Amazon.S3;
 using HexaContent.Minio.Client;
 using Microsoft.AspNetCore.Mvc;
+using SixLabors.ImageSharp;
 
 namespace HexaContent.ContentHub.Controllers;
 
@@ -17,7 +18,15 @@ public class ImagesController(MinioFactory minioFactory) : Controller
 
 		foreach (var bucket in buckets.Buckets)
 		{
-			var response = await PutContent(client, bucket, $"images/{image.FileName}", image.OpenReadStream(), image.ContentType);
+			// NetVips.Image vipsImage = NetVips.Image.NewFromStream(image.OpenReadStream(), access: NetVips.Enums.Access.Sequential);
+
+
+			using MemoryStream memoryStream = new();
+			using var image1 = Image.Load(image.OpenReadStream());
+			image1.Save(memoryStream, image1.Metadata.DecodedImageFormat);
+			memoryStream.Position = 0;
+			var response = await PutContent(client, bucket, $"images/{image.FileName}", memoryStream, image1.Metadata.DecodedImageFormat.DefaultMimeType);
+
 			var url = await client.GetPreSignedURLAsync(new GetPreSignedUrlRequest
 			{
 				BucketName = bucket.BucketName,
@@ -26,13 +35,17 @@ public class ImagesController(MinioFactory minioFactory) : Controller
 			});
 
 			url = url.Replace("https://", "http://");
+			int height = image1.Height;
+			int width = image1.Width;
 
 			return Json(new
 			{
 				success = 1,
 				file = new
 				{
-					url
+					url,
+					height,
+					width
 				}
 			});
 		}
