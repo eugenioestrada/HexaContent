@@ -31,7 +31,7 @@ public class ImagesController(MinioFactory minioFactory) : Controller
 			{
 				BucketName = bucket.BucketName,
 				Key = $"images/{image.FileName}",
-				Expires = DateTime.UtcNow.AddDays(7),
+				Expires = DateTime.UtcNow.AddDays(7)
 			});
 
 			url = url.Replace("https://", "http://");
