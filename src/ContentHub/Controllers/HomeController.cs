@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using HexaContent.ContentHub.Models;
 using HexaContent.Core.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HexaContent.ContentHub.Controllers;
 
+[Authorize]
 public class HomeController([FromServices] IContentService _contentService, [FromServices] IAuthorService _authorService) : Controller
 {
     public async Task<IActionResult> Index()

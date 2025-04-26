@@ -1,6 +1,7 @@
 using HexaContent.Infrastructure.Extension;
 using HexaContent.Services.Extension;
 using HexaContent.Minio.Client;
+using Auth0.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,11 +13,20 @@ builder.AddMessageBus();
 builder.AddServices();
 builder.AddMinioClient("bucket");
 
+builder.Services.AddAuth0WebAppAuthentication(options =>
+{
+	options.Domain = builder.Configuration["Auth0:Domain"];
+	options.ClientId = builder.Configuration["Auth0:ClientId"];
+});
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapStaticAssets();
 
