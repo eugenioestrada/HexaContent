@@ -20,6 +20,9 @@
   <Folder Name="/Components/EdgeProxy/" Id="e793f97c-3693-a4a8-a87d-024695323ded">
     <Project Path="EdgeProxy/HexaContent.EdgeProxy.csproj" />
   </Folder>
+  <Folder Name="/Components/ImageOptimizer/">
+    <Project Path="ImageOptimizer/HexaContent.ImageOptimizer.csproj" />
+  </Folder>
   <Folder Name="/Components/StaticForge/" Id="028bea5a-5c7d-c8ce-9fce-1296d6bc7153">
     <Project Path="StaticForge/HexaContent.StaticForge.csproj" />
   </Folder>

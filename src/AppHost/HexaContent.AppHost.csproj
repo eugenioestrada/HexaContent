@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Sdk Name="Aspire.AppHost.Sdk" Version="9.2.0" />
 
@@ -22,6 +22,7 @@
     <ProjectReference Include="..\ContentHub\HexaContent.ContentHub.csproj" />
     <ProjectReference Include="..\DynamicBridge\HexaContent.DynamicBridge.csproj" />
     <ProjectReference Include="..\EdgeProxy\HexaContent.EdgeProxy.csproj" />
+    <ProjectReference Include="..\ImageOptimizer\HexaContent.ImageOptimizer.csproj" />
     <ProjectReference Include="..\StaticForge\HexaContent.StaticForge.csproj" />
     <ProjectReference Include="..\Minio.Hosting\HexaContent.Minio.Hosting.csproj" IsAspireProjectResource="false" />
     <ProjectReference Include="..\Varnish.Hosting\HexaContent.Varnish.Hosting.csproj" IsAspireProjectResource="false" />

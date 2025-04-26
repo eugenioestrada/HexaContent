@@ -56,6 +56,13 @@ var bridge = builder.AddProject<HexaContent_DynamicBridge>("bridge")
 	.WithUrlForEndpoint("http", u => u.DisplayText = "Dynamic Bridge (HTTP)")
 	.WithUrlForEndpoint("https", u => u.DisplayText = "Dynamic Bridge (HTTPS)");
 
+// Image Optimizer
+
+var optimizer = builder.AddProject<HexaContent_ImageOptimizer>("optimizer")
+	.WithReference(bucket)
+	.WaitFor(bucket)
+	.WithUrlForEndpoint("http", u => u.DisplayText = "Image Optimizer (HTTP)")
+	.WithUrlForEndpoint("https", u => u.DisplayText = "Image Optimizer (HTTPS)");
 
 // Edge Proxy
 
@@ -73,8 +80,10 @@ var proxy = builder.AddProject<HexaContent_EdgeProxy>("proxy")
 builder.AddVarnish("varnish")
 	.WithReference(bridge)
 	.WithReference(proxy)
+	.WithReference(optimizer)
 	.WaitFor(bridge)
 	.WaitFor(proxy)
+	.WaitFor(optimizer)
 	.WithUrlForEndpoint("http", u => u.DisplayText = "Varnish (HTTP)")	
 	.WithUrlForEndpoint("https", u => u.DisplayText = "Varnish (HTTPS)");
 
