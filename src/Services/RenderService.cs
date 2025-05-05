@@ -8,57 +8,99 @@ using System.Text.RegularExpressions;
 
 namespace HexaContent.Services;
 
+/// <summary>
+/// Provides rendering services for templates and Editor.js content.
+/// </summary>
 public partial class RenderService : IRenderService
 {
-	private static readonly ConcurrentDictionary<string, Template> _templates = new();
+    /// <summary>
+    /// A thread-safe dictionary to cache compiled templates.
+    /// </summary>
+    private static readonly ConcurrentDictionary<string, Template> _templates = new();
 
-	public ValueTask<string> RenderAsync<T>(string templateMarkup, T model) where T : class
+    /// <summary>
+    /// Renders a template with the provided model asynchronously.
+    /// </summary>
+    /// <typeparam name="T">The type of the model.</typeparam>
+    /// <param name="templateMarkup">The template markup to render.</param>
+    /// <param name="model">The model to use for rendering.</param>
+    /// <returns>A task that represents the asynchronous rendering operation. The task result contains the rendered string.</returns>
+    public ValueTask<string> RenderAsync<T>(string templateMarkup, T model) where T : class
 	{
 		var template = GetTemplate(templateMarkup);
-		var scriptObject = new ScriptObject();
-		
-		scriptObject.Import(model);
 
-		scriptObject.Import("editojs_render", EditorJsRender);
+		ScriptObject scriptObject = GetScriptObject(model);
 
-		var context = new TemplateContext();
-
-		context.PushGlobal(scriptObject);
+		var context = new TemplateContext(scriptObject);
 
 		return template.RenderAsync(context);
 	}
 
+	private static ScriptObject GetScriptObject<T>(T model) where T : class
+	{
+		var scriptObject = new ScriptObject();
+		scriptObject.Import(model);
+		scriptObject.Import("editojs_render", EditorJsRender);
+		return scriptObject;
+	}
+
+	/// <summary>
+	/// The regex pattern used to normalize JSON by swapping "id" and "type" properties.
+	/// </summary>
 	private const string IdAndTypeRegexPattern = """
-		"id":"(.*?)","type":"(.*?)"
-		""";
+        "id":"(.*?)","type":"(.*?)"
+        """;
 
-	[GeneratedRegex(IdAndTypeRegexPattern)]
-	private static partial Regex IdAndTypeRegex();
+    /// <summary>
+    /// Compiles the regex for normalizing JSON.
+    /// </summary>
+    /// <returns>A compiled regex instance.</returns>
+    [GeneratedRegex(IdAndTypeRegexPattern)]
+    private static partial Regex IdAndTypeRegex();
 
-	static string EditorJsRender(string content)
-	{
-		content = IdAndTypeRegex().Replace(content, "\"type\":\"$2\",\"id\":\"$1\"");
+    /// <summary>
+    /// Renders Editor.js content into a string.
+    /// </summary>
+    /// <param name="content">The raw Editor.js JSON content.</param>
+    /// <returns>The rendered content as a string.</returns>
+    static string EditorJsRender(string content)
+    {
+        content = NormalizeJson(content);
 
-		JsonSerializerOptions options = new()
-		{
-			PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-		};
+        var editorJsContent = Deserialize(content);
 
-		var editorJsContent = JsonSerializer.Deserialize<EditorJsContent>(content, options);
+        return editorJsContent.Render();
+    }
 
-		return editorJsContent.Render();
-	}
+    /// <summary>
+    /// Normalizes the JSON content by swapping "id" and "type" properties.
+    /// </summary>
+    /// <param name="content">The raw JSON content.</param>
+    /// <returns>The normalized JSON content.</returns>
+    private static string NormalizeJson(string content) => IdAndTypeRegex().Replace(content, "\"type\":\"$2\",\"id\":\"$1\"");
 
-	private Template GetTemplate(string template)
-	{
-		if (_templates.TryGetValue(template, out var cachedTemplate))
-		{
-			return cachedTemplate;
-		}
+    /// <summary>
+    /// Deserializes the JSON content into an <see cref="EditorJsContent"/> object.
+    /// </summary>
+    /// <param name="content">The raw JSON content.</param>
+    /// <returns>The deserialized <see cref="EditorJsContent"/> object.</returns>
+    static EditorJsContent Deserialize(string content) => JsonSerializer.Deserialize(content, EditorJsSourceGenerationContext.Default.EditorJsContent);
 
-		var newTemplate = Template.Parse(template);
-		_templates.TryAdd(template, newTemplate);
+    /// <summary>
+    /// Retrieves a compiled template from the cache or parses a new one if not cached.
+    /// </summary>
+    /// <param name="template">The template markup to parse.</param>
+    /// <returns>A compiled <see cref="Template"/> instance.</returns>
+    private Template GetTemplate(string template)
+    {
+        if (_templates.TryGetValue(template, out var cachedTemplate))
+        {
+            return cachedTemplate;
+        }
 
-		return newTemplate;
-	}
+        var newTemplate = Template.Parse(template);
+        _templates.TryAdd(template, newTemplate);
+
+        return newTemplate;
+    }
 }
