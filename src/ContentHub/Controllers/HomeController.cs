@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace HexaContent.ContentHub.Controllers;
 
-[Authorize]
 public class HomeController([FromServices] IContentService _contentService, [FromServices] IAuthorService _authorService) : Controller
 {
-    public async Task<IActionResult> Index()
+	[Authorize(Policy = Permissions.CanRead)]
+	public async Task<IActionResult> Index()
     {
         var result = await _contentService.GetAll();
 
