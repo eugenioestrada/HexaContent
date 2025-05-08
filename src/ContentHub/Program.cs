@@ -24,7 +24,7 @@ builder.Services.AddAuth0WebAppAuthentication(options =>
 
 builder.Services.AddAuthorization(options =>
 {
-	foreach (var item in PermissionsInRoles.PermissionsRoles)
+	foreach (var item in PermissionsInRoles.PermissionsRoles())
 	{
 		options.AddPolicy(item.Key, policy => policy.RequireClaim(ROLE_CLAIM_NAME, item.Value));
 	}
